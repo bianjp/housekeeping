@@ -1,0 +1,8 @@
+.sass-cache/
+bin/config/
+bin/lib/
+bin/routes/
+node_modules/
+public/javascripts/
+public/stylesheets/
+app.js
