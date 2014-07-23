@@ -1,0 +1,18 @@
+$page-width: 1000px;
+
+#header-content {
+  position: relative;
+  width: $page-width;
+  margin: 0 auto;
+}
+
+#page-content {
+  width: $page-width;
+  margin: 0 auto;
+}
+
+#login-status {
+  position: absolute;
+  right: 50px;
+  top: 0px;
+}

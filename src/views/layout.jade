@@ -1,7 +1,17 @@
 doctype html
 html
   head
-    title= title
+
+    title= 'Housekeeping - ' + title
+    link(rel='stylesheet', href='/lib/semantic/css/semantic.min.css')
     link(rel='stylesheet', href='/stylesheets/all.css')
   body
-    block content
+    include includes/header
+
+    #page-content
+      block content
+
+    script(src='/lib/jquery/jquery-1.11.1.min.js')
+    script(src='/lib/semantic/javascript/semantic.min.js')
+    script(src='/javascripts/lib/lib.js')
+    script(src='/javascripts/all.js')
