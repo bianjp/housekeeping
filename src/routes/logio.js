@@ -27,7 +27,7 @@ router.post('/', function(req, res) {
     }
     req.session.user = user;
     res.send({
-      flag : true,
+      flag : true
     });
     res.redirect('/');
   });
@@ -36,7 +36,7 @@ router.post('/', function(req, res) {
 router.get('/logout', function(req, res) {
   req.session.user = null;
   res.send({
-    flag : true,
+    flag : true
   });
   res.redirect('/');
 });
