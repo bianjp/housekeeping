@@ -1,4 +1,6 @@
-var router = require('express').Router();
+var router  =  require('express').Router();
+var crypto  =  require('crypto');
+var User    =  require('../lib/user.js'); 
 
 router.get('/', function(req, res){
   res.render('logio', {
@@ -10,7 +12,7 @@ router.post('/', function(req, res) {
   var md5 = crypto.createHash('md5');
   var password = md5.update(req.body.password).digest('base64');
 
-  User.get(req.body.name, function(err, user){
+  User.get(req.body.username, function(err, user){
     if(!user){
       req.flash('error', '用户不存在');
       return res.redirect('/login');
