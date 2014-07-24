@@ -14,23 +14,20 @@ router.post('/', function(req, res) {
 
   User.get(req.body.username, function(err, user){
     if(!user){
-      req.flash('error', '用户不存在');
       res.send({
         flag : false,
         message : "用户名或密码不存在",
       });
     }
     if (user.password != password){
-      req.flash('error', '用户口令错误');
       res.send({
         flag : false,
         message : "用户名或密码不存在",
       });
     }
     req.session.user = user;
-    req.flash('success', '登入成功');
     res.send({
-      flag : true,
+      flag : true
     });
     res.redirect('/');
   });
@@ -38,9 +35,8 @@ router.post('/', function(req, res) {
 
 router.get('/logout', function(req, res) {
   req.session.user = null;
-  req.flash('success', '登出成功');
   res.send({
-    flag : true,
+    flag : true
   });
   res.redirect('/');
 });
