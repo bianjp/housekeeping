@@ -110,7 +110,7 @@ module.exports = function(grunt) {
 
       javascripts_server: {
         files: ['src/lib/**/*', 'src/routes/**/*', 'app.ls'],
-        tasks: ['clean:js_server', 'livescript:server', 'express']
+        tasks: ['clean:js_server', 'livescript:server', 'copy', 'express']
       },
 
       grunt: {
