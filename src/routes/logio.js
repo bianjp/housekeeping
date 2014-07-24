@@ -18,18 +18,17 @@ router.post('/', function(req, res) {
         flag : false,
         message : "用户名或密码不存在",
       });
-    }
-    if (user.password != password){
+    } else if (user.password != password){
       res.send({
         flag : false,
         message : "用户名或密码不存在",
       });
-    }
-    req.session.user = user;
-    res.send({
-      flag : true
-    });
-    res.redirect('/');
+    } else {
+      req.session.user = user;
+      res.send({
+        flag : true
+      });
+    };
   });
 });
 
