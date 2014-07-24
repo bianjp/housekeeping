@@ -34,33 +34,34 @@ app.use (req, res, next)!->
 # template helpers
 require './bin/lib/helpers' <| app
 
-# routes
-app.use require './bin/routes/routes'
-
-# catch 404 and forward to error handler
-app.use (req, res, next)->
-  err = new Error 'Not Found'
-  err.status = 404
-  next err
-
-# development error handler
-# will print stacktrace
-if (app.get 'env')  === 'development'
-  app.use (err, req, res, next)->
-    res.status err.status || 500
-    res.render 'error', do
-      message: err.message
-      error: err
-
-# production error handler
-# no stacktraces leaked to user
-app.use (err, req, res, next)->
-  res.status err.status || 500
-  res.render 'error', do
-    message: err.message
-    error: {}
-
 db = require './bin/lib/db'
 db.connect (db)!->
   app.set 'port', process.env.PORT || 3000
   app.listen app.get 'port'
+
+  # routes
+  app.use require './bin/routes/routes'
+
+  # catch 404 and forward to error handler
+  app.use (req, res, next)->
+    err = new Error 'Not Found'
+    err.status = 404
+    next err
+
+  # development error handler
+  # will print stacktrace
+  if (app.get 'env')  === 'development'
+    app.use (err, req, res, next)->
+      console.log err
+      res.status err.status || 500
+      res.render 'error', do
+        message: err.message
+        error: err
+
+  # production error handler
+  # no stacktraces leaked to user
+  app.use (err, req, res, next)->
+    res.status err.status || 500
+    res.render 'error', do
+      message: err.message
+      error: {}
