@@ -2,6 +2,8 @@ console.log("加载运行admin路由模块") ;
 
 var router = require('express').Router();
 var checkId = require('./checkIdentity') ;
+var company = require('../lib/company') ;
+var user = require('../lib/user') ;
 
 module.exports = router;
 
@@ -19,7 +21,13 @@ router.get('/company', function(req, res) {
 });
 
 router.post('/company', function(req, res) {
-  res.send("系统管理员删除公司");
+  if (! req.body.company) {seq.session.err = '没有上传数据' ; return ;}
+  var err1 = '' , err2 = '' ;
+  //user.dele({_id : company.userId} , function(err , doc)
+  //  { err1 = (err ? err : '') ; }) ;
+  //company.dele(req.body.company , function(err , doc)
+  //  { err2 = (err ? err : '') ; }) ;
+  seq.session.err = err1 + err2 ;
 });
 
 //系统管理员添加公司页面
@@ -28,7 +36,13 @@ router.get('/company/add', function(req, res) {
 });
 
 router.post('/company/add', function(req, res) {
-  res.send("系统管理员添加公司");
+  if (! req.body.company) {seq.session.err = '没有上传数据' ; return ;}
+  var err1 = '' , err2 = '' ;
+  //user.save({_id : company.userId} , function(err , doc)
+  //  { err1 = (err ? err : '') ; }) ;
+  company.save(req.body.company , function(err , doc)
+    { err2 = (err ? err : '') ; }) ;
+  seq.session.err = err1 + err2 ;
 });
 
 //系统管理员修改公司信息页面
