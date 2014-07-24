@@ -2,4 +2,12 @@
   #header-content
     h1.ui.huge.header Housekeeping
     #login-status
-      a(href="/login") 登录
+      if !currentUser
+        a(href='/login') 登录
+      else
+        a(href='/profile')= currentUser.username
+        if currentUser.role == 'admin'
+          a(href='/admin') 管理页面
+        else
+          a(href='/company') 管理页面
+        a(href='/logout') 退出

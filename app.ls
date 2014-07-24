@@ -19,15 +19,23 @@ app.use bodyParser.urlencoded!
 app.use cookieParser!
 app.use session do
   secret: config.cookieSecret
-  saveUninitialized: true
-  resave: true
+  saveUninitialized: false
+  resave: false
 app.use express.static path.join __dirname, 'public'
 
 if (app.get 'env')  === 'development'
   app.use logger 'dev'
 
+# make session accessible in templates
+app.use (req, res, next)!->
+  res.locals.currentUser = req.session.user
+  next!
+
+# template helpers
+require './bin/lib/helpers' <| app
+
 # routes
-app.use '/', require './bin/routes/routes'
+app.use require './bin/routes/routes'
 
 # catch 404 and forward to error handler
 app.use (req, res, next)->
