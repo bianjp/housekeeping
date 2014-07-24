@@ -4,21 +4,18 @@ block title
   title admin
 block content
 
-  div(id='add-button')
-    div(class='massive ui button')
-      a(href='./admin/company/add')
-        | add-button
-  div(id='companies-list')
+  #add-button
+    .massive.ui.button
+      a(href='./admin/company/add') add-button
+  #companies-list
     - var n = 0
-    div(class='ui divided list')
+    .ui.divided.list
       while n < 100
-        div(class='item')
-          div(class='right floated tiny teal ui button') Delete
-          div(class='right floated tiny teal ui button')
-            a(href='./admin/company/update?id=' + n)
-              | Edit
-          // img(class='ui avatar image' src="" alt="")
-          div(class='content')
-            div(class='header')
-              ='Company ' + n
+        .item
+          .right.floated.tiny.teal.ui.button Delete
+          .right.floated.tiny.teal.ui.button
+            a(href='./admin/company/update?id=' + n) Edit
+          // img.ui.avatar.image(src='' alt='')
+          .content
+            .header= 'Company ' + n
         - n = n + 1
