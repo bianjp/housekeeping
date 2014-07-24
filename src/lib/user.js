@@ -10,8 +10,7 @@ User.prototype.save = function save(callback) {
   var user = {
     username: this.name,
     password: this.password,
-    _id: null,
-    createdAt: null,
+    createdAt: new Date,
     role: null,    
   };
 
