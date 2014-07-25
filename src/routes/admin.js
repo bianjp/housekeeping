@@ -4,8 +4,10 @@ var router = express.Router();
 module.exports = router;
 
 //系统管理员首页
-router.get('/', function(req, res) {
-  res.send("系统管理员主页显示");
+router.get('/', function(req, res){
+  res.render('admin', {
+    title:'admin',
+  });
 });
 
 //系统管理员查看删除公司页面
