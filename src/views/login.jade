@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  form.ui.form.segment#login
+    .ui.error.message
+      p#error
+    .inline.field
+      label 账号
+      .ui.left.labeled.icon.input
+        input#username(type='text', autofocus)
+        i.user.icon
+    .inline.field
+      label 密码
+      .ui.left.labeled.icon.input
+        input#password(type='password')
+        i.lock.icon
+    button.ui.blue.submit.button 登录

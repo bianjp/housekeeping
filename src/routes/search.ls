@@ -1,15 +1,15 @@
 router = require 'express' .Router!
 
-router.get '/search/company', (req, res)->
+router.get '/company', (req, res)->
   res.render 'search', do
-    title: 'Search-company'
+    title: '搜索中介公司'
 
-router.get '/search', (req, res)->
+router.get '/', (req, res)->
   res.render 'search', do
-    title: 'Search'
+    title: '搜索页面'
 
-router.get '/search/employee', (req, res)->
+router.get '/employee', (req, res)->
   res.render 'search', do
-    title: 'Search-employee'
+    title: '搜索雇员'
 
 module.exports = router
