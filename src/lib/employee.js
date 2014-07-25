@@ -1,7 +1,7 @@
 var db = require('./db').getConnection();
 
 function Employee(employee) {
-  this.company          =   employee.company,
+  this.company          =   employee.company,         //公司的id
   this.name             =   employee.name,
   this.birthday         =   employee.birthday,
   this.nativePlace      =   employee.nativePlace,
@@ -21,6 +21,11 @@ function Employee(employee) {
 
 module.exports = Employee;
 
+/*
+ * 功能：新增公司雇员
+ * 参数：null
+ * 返回：数据对象
+ */
 Employee.prototype.save = function save(callback) {
   var employee = {
     name: this.name,
@@ -56,25 +61,35 @@ Employee.prototype.save = function save(callback) {
   });
 };
 
-Employee.get = function get(ename, callback) {
+/*
+ * 功能：得到本公司所有雇员
+ * 参数：company的id
+ * 返回：数据对象
+ */
+Employee.get = function get(com, callback) {
   db.collection('employees', function(err, collection) {
     if(err){
       //B
       console.log('数据库接入错误，错误代码B');
       callback(err);
     }
-    collection.findOne({name: ename}, function(err, doc){
-      if(doc){
-        var employee = new Employee(doc);
-        callback(err, employee);
-      }else {
+    collection.find({company: com}).toArray(function(err, docs){
+      if(docs){
+        callback(err, docs);
+      }else{
+        cons.log("未找到相关中介公司员工");
         callback(err, null);
       }
     });
   });
 };
 
-Employee.delete = function delete(id, callback) {
+/*
+ * 功能：删除本公司的雇员
+ * 参数：雇员id
+ * 返回：null
+ */
+Employee.remove = function delete(id, callback) {
   db.collection('employees', function(err, collection) {
     if(err){
       //C
@@ -82,6 +97,33 @@ Employee.delete = function delete(id, callback) {
       callback(err);
     }
     collection.remove({_id : id}, {w : 1}, function(err, result){
-      callback(err);
+      if(err){
+        console.log("删除失败");
+        callback(err);
+      }else{
+        callback(err, result);
+      }
     });
 };
+
+/*
+ * 功能：更新雇员信息
+ * 参数：雇员id，被更改信息
+ * 返回：result
+ */
+
+Employee.change = function change(userid, data,callback) {
+  db.collection('employees', function(err, collection){
+    if(err){
+      //D
+      console.log('数据库接入错误，错误代码D');
+    }
+    collection.update({_id: userid}, data, {w: 1}, function(err, result){ 
+      if(err){
+        console.log('修改数据失败');
+        callback(err);
+      }
+    });
+  });
+}; 
+
