@@ -1,6 +1,6 @@
-var router = require('express').Router();
-var crypto = require('crypto');
-var Employee = require('../lib/employee.js');
+var router    = require('express').Router();
+var crypto    = require('crypto');
+var Employee  = require('../lib/employee.js');
 
 module.exports = router;
 
@@ -23,17 +23,32 @@ router.get('/', function(req, res){
   });
 });
 
-router.get('/employees', check_login);
-router.get('/employees', function(req, res){
-  res.render('employee',{
-    title:'中介公司管理雇员',
-  });
-});
-
 router.get('/update', check_login);
 router.get('/update', function(req, res){
   res.render('cominfo',{
     title:'中介公司修改信息',
+  });
+});
+
+/*
+ * 功能：查看雇员信息
+ * 参数：
+ * 返回：
+ */
+router.get('/employees', check_login);
+router.get('/employees', function(req, res){
+  Employee.get(req.body.company, function(err, docs){
+    if(!docs){
+      res.send({
+        flag: false,
+        message: '没有雇员信息',
+      });
+    }else{
+      res.render('employee',{
+        title:'中介公司管理雇员',
+        employees: docs,
+      });
+    }
   });
 });
 
@@ -50,7 +65,45 @@ router.post('/update', function(req, res){
  * 参数：
  * 返回：
  */
+router.get('/employees/add', function(req, res){
+  res.render('addemploy',{
+    title: '增加雇员',
+  });
+});
 router.post('/employees/add', function(req, res){
+  var newEmployee = new User({
+    company          :   req.body.company,         //公司的id
+    name             :   req.body.name,
+    birthday         :   req.body.birthday,
+    nativePlace      :   req.body.nativePlace,
+    isMarried        :   req.body.isMarried,
+    education        :   req.body.education,
+    photo            :   req.body.photo,
+    height           :   req.body.height,
+    weight           :   req.body.weight,
+    certificates     :   req.body.certificates,
+    languages        :   req.body.languages,
+    workExperience   :   req.body.workExperience,
+    cookingStyle     :   req.body.cookingStyle,
+    specialities     :   req.body.specialities,
+    description      :   req.body.description,
+    workDetail       :   req.body.workDetail,
+  });
+
+  newEmployee.save(function(err){
+    if(err){
+      res.send({
+        flag: false,
+        message: '创建失败',
+      });
+    }else{
+       res.send({
+        flag: true,
+        message: '创建成功',
+      });
+    }
+  });
+  
 });
 
 /*
@@ -59,6 +112,19 @@ router.post('/employees/add', function(req, res){
  * 返回：
  */
 router.post('/employees/update', function(req, res){
+  Employee.change(req.body._id, req.body, function(err){
+    if(err){
+      res.send({
+        flag: false,
+        message: '更新失败',
+      });
+    }else{
+       res.send({
+        flag: true,
+        message: '更新成功',
+      });
+    }
+  }); 
 });
 
 /*
@@ -67,6 +133,19 @@ router.post('/employees/update', function(req, res){
  * 返回：
  */
 router.post('/employees/delete', function(req, res){
+  Employee.remove(req.body._id, function(err){
+    if(err){
+      res.send({
+        flag: false,
+        message: '删除失败',
+      });
+    }else{
+       res.send({
+        flag: true,
+        message: '删除成功',
+      });
+    }
+  }); 
 });
 
 //批量功能
