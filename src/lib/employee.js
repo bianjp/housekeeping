@@ -81,7 +81,7 @@ Employee.delete = function delete(id, callback) {
       console.log('数据库接入错误，错误代码C');
       callback(err);
     }
-    collection.remove({_id: id}, {w:1}, function(err, result){
+    collection.remove({_id : id}, {w : 1}, function(err, result){
       callback(err);
     });
 };

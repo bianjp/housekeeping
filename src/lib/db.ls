@@ -29,4 +29,15 @@ module.exports =
 
   # 插入程序运行必需的数据
   initialize: (callback)!->
-    callback null
+    connection.collection 'users', (err, col)!->
+      if err
+        throw new Error 'Failed to insert admin account'
+        callback!
+      else
+        col.insert {
+          username: 'admin'
+          password: '21232f297a57a5a743894a0e4a801fc3'
+        }, (err, result)!->
+          if err
+            throw new Error 'Failed to insert admin account'
+          callback!
