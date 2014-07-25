@@ -1,22 +1,22 @@
 var db = require('./db').getConnection();
 
 function Employee(employee) {
-  this.company          =   employee.company,         //公司的id
-  this.name             =   employee.name,
-  this.birthday         =   employee.birthday,
-  this.nativePlace      =   employee.nativePlace,
-  this.isMarried        =   employee.isMarried,
-  this.education        =   employee.education,
-  this.photo            =   employee.photo,
-  this.height           =   employee.height,
-  this.weight           =   employee.weight,
-  this.certificates     =   employee.certificates,
-  this.languages        =   employee.languages,
-  this.workExperience   =   employee.workExperience,
-  this.cookingStyle     =   employee.cookingStyle,
-  this.specialities     =   employee.specialities,
-  this.description      =   employee.description,
-  this.workDetail       =   employee.workDetail,
+  this.company          =   employee.company;         //公司的id
+  this.name             =   employee.name;
+  this.birthday         =   employee.birthday;
+  this.nativePlace      =   employee.nativePlace;
+  this.isMarried        =   employee.isMarried;
+  this.education        =   employee.education;
+  this.photo            =   employee.photo;
+  this.height           =   employee.height;
+  this.weight           =   employee.weight;
+  this.certificates     =   employee.certificates;
+  this.languages        =   employee.languages;
+  this.workExperience   =   employee.workExperience;
+  this.cookingStyle     =   employee.cookingStyle;
+  this.specialities     =   employee.specialities;
+  this.description      =   employee.description;
+  this.workDetail       =   employee.workDetail;
 };
 
 module.exports = Employee;
@@ -89,7 +89,7 @@ Employee.get = function get(com, callback) {
  * 参数：雇员id
  * 返回：null
  */
-Employee.remove = function delete(id, callback) {
+Employee.remove = function remove(id, callback) {
   db.collection('employees', function(err, collection) {
     if(err){
       //C
@@ -104,6 +104,7 @@ Employee.remove = function delete(id, callback) {
         callback(err, result);
       }
     });
+  });
 };
 
 /*
