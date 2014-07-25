@@ -1,4 +1,15 @@
 extends layout
 
 block content
-  
+  #search-company
+    .ui.action.input.huge
+      input(type='text', placeholder='搜索中介公司')
+      .ui.button 搜 索
+
+  #search-employee
+    a.ui.button.massive.teal(href='/search?type=1') 钟点工
+    a.ui.button.massive.teal(href='/search?type=2') 宅速洁
+    a.ui.button.massive.teal(href='/search?type=3') 住家保姆
+    a.ui.button.massive.teal(href='/search?type=4') 育儿嫂
+    a.ui.button.massive.teal(href='/search?type=5') 护理
+    a.ui.button.massive.teal(href='/search?type=6') 早出晚归
