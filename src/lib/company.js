@@ -44,15 +44,28 @@ Company.action = function(company , action , callback)
     if (err) return callback(err) ;
     operation[action](collection , company , callback) ;    //暂无索引
     }) ;
-  }
+  } ;
 
 //保存到数据库
 Company.save = function(company , callback)
-  {Company.action(company , 0 , callback) ;} ;
+  {
+  var companyData = new Company(company) ;
+  Company.action(companyData , 0 , callback) ;
+  } ;
 
 //到数据库查询by name
 Company.get = function(company , callback)
-  {Company.action(company , 1 , callback) ;} ;
+  {
+  Company.action(company , 1 , function(err , doc)
+    {
+    if(doc)
+      {
+        var tmp = new Company(doc);
+        callback(err, tmp);
+      } else callback(err, null);
+    }) ;
+
+  } ;
 
 //到数据库删除by name
 Company.dele = function(company , callback)

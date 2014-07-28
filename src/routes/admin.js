@@ -76,6 +76,7 @@ router.post('/company/add', function(req, res) {
   if (! req.body.user) {seq.session.err = '没有上传帐号数据' ; return(res.redirect('/admin/company/add')) ;}
 
   var userData = new user(req.body.user) ;
+  userData.password = userData.hashPassword(userData.password) ;
   req.body.company.userId = new ObjectID.createFromHexString(userData._id.toHexString()) ;
   var companyData = new company(req.body.company) ;
 

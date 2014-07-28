@@ -29,26 +29,26 @@
   {
   _id: new require('mongodb').ObjectID(),
   userId: new require('mongodb').ObjectID(),              //users中对应的document
-  name: new String(),                                     //公司名称
-  logo: new String(),                                     //图片网址
+  name: (new String()).valueOf(),                                     //公司名称
+  logo: (new String()).valueOf(),                                     //图片网址
   registeredAt: new Date(),                               //注册时间
-  businessScope: new Array(new String()),                 //业务范围
+  businessScope: new Array((new String()).valueOf()),                 //业务范围
   serviceRegions: new Array(
     {
-    city: new String(),
-    regions: new Array(new String())
+    city: (new String()).valueOf(),
+    regions: new Array((new String()).valueOf())
     }),
-  guarantees: new Array(new String()),                   //提供的保障
-  about: new String(),
+  guarantees: new Array((new String()).valueOf()),                   //提供的保障
+  about: (new String()).valueOf(),
   contacts:
     {
-    website: new String(),                               //公司网站
-    email: new String(),
-    fixedPhone: new String(),
-    mobilePhone: new String(),
-    QQ: new String(),
-    address: new String(),
-    contact: new String()                                //联系人
+    website: (new String()).valueOf(),                               //公司网站
+    email: (new String()).valueOf(),
+    fixedPhone: (new String()).valueOf(),
+    mobilePhone: (new String()).valueOf(),
+    QQ: (new String()).valueOf(),
+    address: (new String()).valueOf(),
+    contact: (new String()).valueOf()                                //联系人
   },
-  employeeCount: new Number()                            //雇员数量
+  employeeCount: new Number().valueOf()                            //雇员数量
   }
