@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  form.ui.form.segment#admin-add-company
+    .ui.error.message
+      p#error
+    .ui.warning.message
+      p#warning
+    .inline.field
+      label 账号
+      .ui.left.labeled.icon.input
+        input#username(type='text', autofocus)
+        i.user.icon
+    .inline.field
+      label 密码
+      .ui.left.labeled.icon.input
+        input#password(type='password')
+        i.lock.icon
+    .inline.field
+      label 密码确认
+      .ui.left.labeled.icon.input
+        input#password-confirm(type='password')
+        i.lock.icon
+    .inlien.field
+      label 公司名称
+      .ui.left.labeled.icon.input
+        input#company-name(type='text')
+        i.home.icon
+    button.ui.blue.submit.button 添加

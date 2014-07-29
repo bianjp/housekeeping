@@ -1,18 +1,16 @@
-extends layout
+extends ../layout
 
-block title
-  title admin
 block content
 
   #add-button
-      a.massive.ui.button(href='./admin/company/add') add-button
+      a.massive.ui.button(href='/admin/company/add') add-button
   #companies-list
     - var n = 0
     .ui.divided.list
       while n < 100
         .item
           .right.floated.tiny.teal.ui.button Delete
-          a.right.floated.tiny.teal.ui.button(href='./admin/company/update?id=' + n) Edit
+          a.right.floated.tiny.teal.ui.button(href='/admin/company/update?id=' + n) Edit
           // img.ui.avatar.image(src='' alt='')
           .content
             .header= 'Company ' + n

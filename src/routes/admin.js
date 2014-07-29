@@ -5,8 +5,8 @@ module.exports = router;
 
 //系统管理员首页
 router.get('/', function(req, res){
-  res.render('admin', {
-    title:'admin',
+  res.render('admin/index', {
+    title:'admin homepage'
   });
 });
 
@@ -21,11 +21,15 @@ router.post('/company', function(req, res) {
 
 //系统管理员添加公司页面
 router.get('/company/add', function(req, res) {
-  res.send("系统管理员准备添加公司");
+  res.render('admin/add', {
+  title: 'admin add company'
+  })
 });
 
 router.post('/company/add', function(req, res) {
-  res.send("系统管理员添加公司");
+  res.send({
+    flag: false
+  })
 });
 
 //系统管理员修改公司信息页面
