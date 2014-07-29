@@ -71,21 +71,22 @@ router.get('/company/add', function(req, res) {
 router.post('/company/add', function(req, res) {
   res.send("系统管理员添加公司");
   /*
-  if (! req.body.company) {seq.session.err = '没有上传公司数据' ; res.redirect('/admin/company/add') ; return ;}
   if (! req.body.user) {seq.session.err = '没有上传帐号数据' ; res.redirect('/admin/company/add') ; return ;}
+  if (! req.body.company) {seq.session.err = '没有上传公司数据' ; res.redirect('/admin/company/add') ; return ;}
 
   var userData = new User(req.body.user) ;
   userData.password = User.hashPassword(userData.password) ;
 
-  req.body.company.userId = userData._id ;
-  var companyData = new Company(req.body.company) ;
-
-  Company.saveOne(companyData , function(err , doc)
+  User.save(userData , function(err , doc)
     {
-    if (err) {seq.session.err = err + ':添加公司信息失败' ; res.redirect('/admin/company/add') ; return ;}
-    user.save(userData , function(err , doc)
+    if (err) {seq.session.err = err + ':添加公司帐号失败' ; res.redirect('/admin/company/add') ; return ;}
+    
+    req.body.company.userId = doc._id ;
+    var companyData = new Company(req.body.company) ;
+
+    Company.saveOne(companyData , function(err , doc)
       {
-      if (err) {seq.session.err = err + ':添加公司帐号失败' ; res.redirect('/admin/company/add') ; return ;}
+      if (err) {seq.session.err = err + ':添加公司信息失败' ; res.redirect('/admin/company/add') ; return ;}
       res.redirect('/admin/company') ;
       }) ;
     }) ;
