@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+  include menu
+
+  .main.container#company-info
+    a.ui.right.floated.teal.small.button(href='/company/update') 更改资料
+    img.ui.small.image#logo(src=company.logo)
+
+    .ui.form
+      .grouped.inline.fields
+        .field
+          label 公司名称
+          p= company.name
+        .field
+          label 注册时间
+          p= formatDate(company.registeredAt)
+        .field
+          label 业务范围
+          p= company.businessScope.join(', ')
+        .field
+          label 服务区域
+          p= getServiceRegions(company.serviceRegions)
+        .field
+          label 服务保障
+          p= company.guarantees.join(', ')
+
+        h3.ui.header 联系方式
+        .field
+          label 网站
+          p
+            a(href=company.contacts.website)= company.contacts.website
+        .field
+          label Email
+          p
+            a(href='mailto:' + company.contacts.email)= company.contacts.email
+        .field
+          label 固定电话
+          p= company.contacts.fixedPhone
+        .field
+          label 手机
+          p= company.contacts.mobilePhone
+        .field
+          label QQ
+          p= company.contacts.QQ
+        .field
+          label 地址
+          p= company.contacts.address
+        .field
+          label 联系人
+          p= company.contacts.contact
+    h3.ui.header 公司简介
+    .container!= company.about

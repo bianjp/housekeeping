@@ -13,3 +13,9 @@ module.exports = (app)!->
           year + '-' + (month+1) + '-' + day
         default
           year + '-' + (month+1) + '-' + day
+
+  app.locals.getServiceRegions = (serviceRegions)->
+    regions = []
+    for item in serviceRegions
+      regions.push item.city + ': ' + item.regions.join(', ')
+    regions.join '; '
