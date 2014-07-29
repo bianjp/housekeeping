@@ -1,5 +1,4 @@
   {
-  "_id": null ,
   "userId": null, 
   "name": "XX公司",   
   "logo": "/public/jpg/XX.jpg", 

@@ -47,9 +47,3 @@ module.exports =
         col.ensureIndex lastAccess: 1, { expireAfterSeconds: 604800 }, (err, result)!->
           if err
             throw new Error 'Failed to ensureIndex for sessions'
-
-  createObjectID: ->
-    ObjectID = require 'mongodb' .ObjectID
-    new ObjectID()
-
-

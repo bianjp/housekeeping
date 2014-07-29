@@ -1,7 +1,7 @@
 /*
   {
-    _id: ObjectID,
-    userId: ObjectID,       //users中对应的document
+    //_id: ObjectID,	    //数据库中自动生成于document中
+    userId: ObjectID,       //对应users集合中document的_id
     name: string,           //公司名称
     logo: string,           //图片网址
     registeredAt: Date,     //注册时间
@@ -27,8 +27,8 @@
   }
 */
   {
-  _id: new require('mongodb').ObjectID(),
-  userId: new require('mongodb').ObjectID(),              //users中对应的document
+  //_id: new require('mongodb').ObjectID(),               //数据库中自动生成于document中
+  userId: new require('mongodb').ObjectID(),              //对应users集合中document的_id
   name: (new String()).valueOf(),                                     //公司名称
   logo: (new String()).valueOf(),                                     //图片网址
   registeredAt: new Date(),                               //注册时间
