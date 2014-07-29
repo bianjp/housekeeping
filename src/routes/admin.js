@@ -12,7 +12,6 @@ router.use('/', checkId.checkAdmin) ;
 
 //系统管理员首页
 router.get('/', function(req, res){
-  res.render('admin', {title: 'admin'}) ;
   /*
   Company.get(null , function(err , docs)
     {
@@ -20,6 +19,9 @@ router.get('/', function(req, res){
     rF.respondGet(res , 'adminMainPage' , docs) ;
     }) ;
   */
+  res.render('admin/index', {
+    title:'admin homepage'
+  });
 });
 
 //系统管理员查看删除公司页面
@@ -56,7 +58,6 @@ router.post('/company', function(req, res) {
 
 //系统管理员添加公司页面
 router.get('/company/add', function(req, res) {
-  res.send("系统管理员准备添加公司");
   /*
   var fs = require('fs') ;
   var template = null ;
@@ -66,10 +67,12 @@ router.get('/company/add', function(req, res) {
     rF.respondGet(res , 'adminAddCompanyPage' , JSON.parse(data)) ;
     }) ;
   */
+  res.render('admin/add', {
+    title: 'admin add company'
+  })
 });
 
 router.post('/company/add', function(req, res) {
-  res.send("系统管理员添加公司");
   /*
   if (! req.body.user) {rF.respondPost(res , {} , '没有上传帐号数据') ; return ;}
   if (! req.body.company) {rF.respondPost(res , {} , '没有上传公司数据') ; return ;}
@@ -80,7 +83,7 @@ router.post('/company/add', function(req, res) {
   User.save(userData , function(err , doc)
     {
     if (err) {rF.respondPost(res , {} , err + '->添加公司帐号失败') ; return ;}
-    
+
     req.body.company.userId = doc._id ;
     var companyData = new Company(req.body.company) ;
 
@@ -91,6 +94,9 @@ router.post('/company/add', function(req, res) {
       }) ;
     }) ;
   */
+  res.send({
+    flag: false
+  });
 });
 
 //系统管理员修改公司信息页面

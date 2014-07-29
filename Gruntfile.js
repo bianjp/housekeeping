@@ -59,8 +59,8 @@ module.exports = function(grunt) {
 
       client: {
         files: {
-          'public/javascripts/lib/lib.js': 'src/client/js/lib/*.ls',
-          'public/javascripts/all.js': ['src/client/js/**/*.ls', '!src/client/js/lib/*.ls']
+          'public/javascripts/lib/lib.js': 'src/client/js/lib/**/*.ls',
+          'public/javascripts/all.js': ['src/client/js/**/*.ls', '!src/client/js/lib/**/*.ls']
         }
       }
     },
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 
     concat: {
       css: {
-        src: ['public/stylesheets/*.css', '!public/stylesheets/all.css'],
+        src: ['public/stylesheets/**/*.css', '!public/stylesheets/all.css'],
         dest: 'public/stylesheets/all.css'
       }
     },
