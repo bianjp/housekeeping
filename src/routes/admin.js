@@ -95,7 +95,8 @@ router.post('/company/add', function(req, res) {
     }) ;
   */
   res.send({
-    flag: false
+    flag: false,
+    message: 'backend not set up yet'
   });
 });
 

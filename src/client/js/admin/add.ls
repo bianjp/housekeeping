@@ -8,16 +8,16 @@ $ !->
         $ '#warning' .text 'Password does not match'
         $ '#admin-add-company' .removeClass 'warning error' .addClass 'warning'
       else
-        data =
+        dataUp =
           username: $ '#username' .val!
           password: passwd
           companyName: $ '#company-name' .val!
 
-        $.post '/admin/company/add', data, (data) !->
-          if data.flag
+        $.post '/admin/company/add', dataUp, (dataDown) !->
+          if dataDown.flag
             $ '#admin-add-company' .replaceWith '<h2>Add succeeded</h2>'
           else
             console.log('ok')
-            $ '#error' .text 'back end not set up yet'
+            $ '#error' .text dataDown.message
             $ '#admin-add-company' .removeClass 'warning error' .addClass 'error'
         , 'json'
