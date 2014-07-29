@@ -35,9 +35,17 @@ module.exports =
         callback!
       else
         col.insert {
+          createdAt: new Date!
           username: 'admin'
           password: '21232f297a57a5a743894a0e4a801fc3'
+          role: 'admin'
         }, (err, result)!->
           if err
             throw new Error 'Failed to insert admin account'
           callback!
+
+    connection.collection 'sessions', (err, col)!->
+      if !err
+        col.ensureIndex lastAccess: 1, { expireAfterSeconds: 604800 }, (err, result)!->
+          if err
+            throw new Error 'Failed to ensureIndex for sessions'

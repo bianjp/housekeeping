@@ -2,13 +2,13 @@ var router  =  require('express').Router();
 var crypto  =  require('crypto');
 var User    =  require('../lib/user.js'); 
 
-router.get('/', function(req, res){
+router.get('/login', function(req, res){
   res.render('login', {
     title:'用户登录',
   });
 });
 
-router.post('/', function(req, res) {
+router.post('/login', function(req, res) {
   var md5 = crypto.createHash('md5');
   var password = md5.update(req.body.password).digest('hex');
 
@@ -24,6 +24,7 @@ router.post('/', function(req, res) {
         message : "用户名或密码不存在",
       });
     } else {
+      delete user.password;
       req.session.user = user;
       res.send({
         flag : true

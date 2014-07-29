@@ -5,4 +5,10 @@ bin/routes/
 node_modules/
 public/javascripts/
 public/stylesheets/
+public/images/logos/
+puglic/images/photos/
 app.js
+
+# Temporary files
+*.swp
+*~
