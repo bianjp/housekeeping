@@ -1,6 +1,7 @@
 var router    = require('express').Router();
 var crypto    = require('crypto');
 var Employee  = require('../lib/employee.js');
+var Company   = require('../lib/company.js');
 
 module.exports = router;
 
@@ -20,6 +21,7 @@ router.get('/', check_login);
 router.get('/', function(req, res){
   res.render('company',{
     title:'中介公司管理页面',
+    company: comdoc,
   });
 });
 
@@ -112,6 +114,7 @@ router.post('/employees/add', function(req, res){
  * 返回：
  */
 router.post('/employees/update', function(req, res){
+  //update的data部分仍然有问题
   Employee.change(req.body._id, req.body, function(err){
     if(err){
       res.send({
