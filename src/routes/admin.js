@@ -8,7 +8,7 @@ var User = require('../lib/user') ;
 module.exports = router;
 
 //判定是否管理员登录
-router.all('/', checkId.checkAdmin) ;
+router.use('/', checkId.checkAdmin) ;
 
 //系统管理员首页
 router.get('/', function(req, res){
