@@ -5,7 +5,7 @@
     name: string,           //公司名称
     logo: string,           //图片网址
     registeredAt: Date,     //注册时间
-    businessScope: string,  //业务范围
+    businessScope: [string,]  //业务范围
     serviceRegions: [
       {
         city: string,

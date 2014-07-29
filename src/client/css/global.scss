@@ -4,6 +4,11 @@ $page-width: 1000px;
   position: relative;
   width: $page-width;
   margin: 0 auto;
+
+  h1 a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 #page-content {

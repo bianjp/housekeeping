@@ -1,12 +1,13 @@
 extends layout
 
 block content
-  #search-company
+  form#search-company(action='/search/company')
     .ui.action.input.huge
       input(type='text', placeholder='搜索中介公司')
-      .ui.button 搜 索
+      .ui.button.submit
+        i.search.icon
 
-  #search-employee
+  .ui.segment#search-employee
     a.ui.button.massive.teal(href='/search?type=1') 钟点工
     a.ui.button.massive.teal(href='/search?type=2') 宅速洁
     a.ui.button.massive.teal(href='/search?type=3') 住家保姆
