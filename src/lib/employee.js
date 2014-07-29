@@ -113,7 +113,7 @@ Employee.remove = function remove(id, callback) {
  * 返回：result
  */
 
-Employee.change = function change(userid, data,callback) {
+Employee.change = function change(userid, data, callback) {
   db.collection('employees', function(err, collection){
     if(err){
       //D

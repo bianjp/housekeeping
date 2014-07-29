@@ -8,16 +8,24 @@ module.exports = router;
 function check_login(req, res, next) {
   if(!req.session.user){
     console.log("未登录");
-    res.send({
-      flag : false,
-      message: '未登录，无权限.'
-    });
-    return res.redirect('/');
+    if (req.xhr) {
+      // 是AJAX请求
+      res.send({
+        flag : false,
+        message: '未登录，无权限.'
+      });    
+    } else {
+      // 普通请求
+      res.redirect('/');
+    }
   }
-  next();
+  else{
+    next();
+  }
 };
 
-router.get('/', check_login);
+router.use('/', check_login); //检查session
+
 router.get('/', function(req, res){
   res.render('company',{
     title:'中介公司管理页面',
@@ -25,7 +33,6 @@ router.get('/', function(req, res){
   });
 });
 
-router.get('/update', check_login);
 router.get('/update', function(req, res){
   res.render('cominfo',{
     title:'中介公司修改信息',
@@ -34,10 +41,9 @@ router.get('/update', function(req, res){
 
 /*
  * 功能：查看雇员信息
- * 参数：
- * 返回：
+ * 参数：公司ID
+ * 返回：雇员数组
  */
-router.get('/employees', check_login);
 router.get('/employees', function(req, res){
   Employee.get(req.body.company, function(err, docs){
     if(!docs){
@@ -64,7 +70,7 @@ router.post('/update', function(req, res){
 
 /*
  * 功能：增加雇员信息
- * 参数：
+ * 参数：无形参
  * 返回：
  */
 router.get('/employees/add', function(req, res){
@@ -110,12 +116,12 @@ router.post('/employees/add', function(req, res){
 
 /*
  * 功能：更新雇员信息
- * 参数：
+ * 参数：雇员ID和被修改对象
  * 返回：
  */
 router.post('/employees/update', function(req, res){
-  //update的data部分仍然有问题
-  Employee.change(req.body._id, req.body, function(err){
+  //update的data部分必须是MongoDB的对象
+  Employee.change(req.body._id, req.data, function(err){
     if(err){
       res.send({
         flag: false,
@@ -132,7 +138,7 @@ router.post('/employees/update', function(req, res){
 
 /*
  * 功能：删除雇员信息
- * 参数：
+ * 参数：雇员ID
  * 返回：
  */
 router.post('/employees/delete', function(req, res){
@@ -158,6 +164,3 @@ router.post('/company/employee/batch', function(req, res){
 
 router.post('/company/employee', function(req, res){
 });
-
-
-
