@@ -73,6 +73,16 @@ Company.get = function(company , callback)
 Company.dele = function(company , callback)
   {return(Company.action(company , 3 , callback)) ;} ;
 
+//到数据库更新by company
+Company.update = function(company , update , callback)
+  {
+  return(db.getConnection().collection('companies', function(err, collection)
+    {
+    if (err) {callback(err) ; return ;}
+    collection.update(company , {$set : update} , callback) ;    //暂无索引
+    })) ;
+  } ;
+
 module.exports = Company ;
 
 //console.log("完成加载运行company模块") ;
@@ -104,6 +114,13 @@ db.connect(function()
     //
     ///*dele删除测试
     Company.dele({name : '公司Cat'} , function(err , sum)
+      {
+        if (err) throw(err) ;
+        console.dir(sum) ;
+      }) ;
+    //
+    ///*update更新测试
+    Company.update({guarantees : ['偷一赔十' , '七天包换']} , {employeeCount : 5} , function(err , sum)
       {
         if (err) throw(err) ;
         console.dir(sum) ;
