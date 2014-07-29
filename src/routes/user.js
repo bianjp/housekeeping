@@ -1,18 +1,27 @@
 var router  =  require('express').Router();
-var crypto  =  require('crypto');
-var User    =  require('../lib/user.js'); 
 
+var checkId = require('./checkIdentity') ;
+var User    =  require('../lib/user.js');
+
+module.exports = router;
+
+//判定是否未登录
+router.all('/login', checkId.checkNotLogin) ;
+//判定是否已登录
+router.all('/logout', checkId.checkLogin) ;
+
+//登录界面
 router.get('/login', function(req, res){
   res.render('login', {
     title:'用户登录',
   });
 });
 
+//登录
 router.post('/login', function(req, res) {
-  var md5 = crypto.createHash('md5');
-  var password = md5.update(req.body.password).digest('hex');
+  var password = User.hashPassword(req.body.password) ;
 
-  User.get(req.body.username, function(err, user){
+  User.get({username: req.body.username}, function(err, user){
     if(!user){
       res.send({
         flag : false,
@@ -33,12 +42,11 @@ router.post('/login', function(req, res) {
   });
 });
 
+//登出界面
 router.get('/logout', function(req, res) {
   req.session.user = null;
   res.send({
     flag : true
   });
-  res.redirect('/');
+  return(res.redirect('/'));
 });
-
-module.exports = router;
