@@ -8,3 +8,7 @@ public/stylesheets/
 public/images/logos/
 puglic/images/photos/
 app.js
+
+# Temporary files
+*.swp
+*~
