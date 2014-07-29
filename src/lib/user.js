@@ -1,8 +1,10 @@
 var db = require('./db').getConnection();
 
 function User(user) {
+  this._id      = user._id;
   this.username = user.username;
   this.password = user.password;
+  this.role     = user.role;
 };
 module.exports = User;
 
@@ -11,7 +13,7 @@ User.prototype.save = function save(callback) {
     username: this.name,
     password: this.password,
     createdAt: new Date,
-    role: null,    
+    role: "company",
   };
 
   db.collection('users', function(err, collection){

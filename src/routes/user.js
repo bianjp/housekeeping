@@ -24,6 +24,7 @@ router.post('/login', function(req, res) {
         message : "用户名或密码不存在",
       });
     } else {
+      delete user.password;
       req.session.user = user;
       res.send({
         flag : true
