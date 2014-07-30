@@ -3,15 +3,17 @@ extends ../layout
 block content
 
   #add-button
-      a.massive.ui.button(href='/admin/company/add') add-button
+    a.massive.ui.button(href='/admin/company/add') add-button
   #companies-list
-    - var n = 0
+    - var i = 0
     .ui.divided.list
-      while n < 100
+      while i < 100
         .item
-          .right.floated.tiny.teal.ui.button Delete
-          a.right.floated.tiny.teal.ui.button(href='/admin/company/update?id=' + n) Edit
+          a.right.floated.tiny.teal.ui.button(
+            href='/admin/company/delete/:id=' + companies[i]._id) Delete
+          a.right.floated.tiny.teal.ui.button(
+            href='/admin/company/update?id=' + companies[i]._id) Edit
           // img.ui.avatar.image(src='' alt='')
           .content
-            .header= 'Company ' + n
-        - n = n + 1
+            .header= companies[i].name
+        - i = i + 1

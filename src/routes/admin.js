@@ -19,8 +19,17 @@ router.get('/', function(req, res){
     rF.respondGet(res , 'adminMainPage' , docs) ;
     }) ;
   */
+  var companies = [];
+  var i;
+  for (i = 0; i < 100; i++) {
+    companies[i] = {
+      _id: i,
+      name: 'Company ' + i
+    }
+  }
   res.render('admin/index', {
-    title:'admin homepage'
+    title:'admin homepage',
+    companies: companies
   });
 });
 
