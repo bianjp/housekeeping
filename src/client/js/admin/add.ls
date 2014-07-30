@@ -17,7 +17,6 @@ $ !->
           if dataDown.flag
             $ '#admin-add-company' .replaceWith '<h2>Add succeeded</h2>'
           else
-            console.log('ok')
             $ '#error' .text dataDown.message
             $ '#admin-add-company' .removeClass 'warning error' .addClass 'error'
         , 'json'

@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+  form.ui.form.segment#admin-update-company
+    .ui.error.message
+      p#error
+    .ui.warning.message
+      p#warning
+    .inline.field
+      label 账号
+      .ui.left.labeled.icon.input
+        input#username(type='text', value = company.username, autofocus)
+        i.user.icon
+    .inline.field
+      label 公司名称
+      .ui.left.labeled.icon.input
+        input#company-name(type='text', value = company.companyName)
+        i.home.icon
+    button.ui.blue.submit.button 修改

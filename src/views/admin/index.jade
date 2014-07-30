@@ -2,16 +2,16 @@ extends ../layout
 
 block content
 
-  #add-button
-    a.massive.ui.button(href='/admin/company/add') add-button
+  #add-company-button
+    a.massive.ui.button(href='/admin/company/add') add-company-button
   #companies-list
     - var i = 0
     .ui.divided.list
       while i < 100
         .item
-          a.right.floated.tiny.teal.ui.button(
+          .right.floated.tiny.teal.ui.button.delete-company-button(
             href='/admin/company/delete/:id=' + companies[i]._id) Delete
-          a.right.floated.tiny.teal.ui.button(
+          a.right.floated.tiny.teal.ui.button.update-company-button(
             href='/admin/company/update?id=' + companies[i]._id) Edit
           // img.ui.avatar.image(src='' alt='')
           .content

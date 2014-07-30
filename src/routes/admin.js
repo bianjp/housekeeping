@@ -111,9 +111,23 @@ router.post('/company/add', function(req, res) {
 
 //系统管理员修改公司信息页面
 router.get('/company/update', function(req, res) {
-  res.send("系统管理员准备修改公司信息");
+  res.render('admin/update',{
+    title: 'admin update company',
+    flag: true,
+    company: {
+      username: '我是用户名称',
+      companyName: '我是公司名称'
+    }
+  })
 });
 
 router.post('/company/update', function(req, res) {
   res.send("系统管理员修改公司信息");
 });
+
+router.get('/company/delete/:id', function(req, res) {
+  res.send({
+    flag: true,
+    message: 'backend not set up yet..'
+  });
+})
