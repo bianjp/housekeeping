@@ -119,7 +119,7 @@ Employee.change = function change(userid, data, callback) {
       //D
       console.log('数据库接入错误，错误代码D');
     }
-    collection.update({_id: userid}, data, {w: 1}, function(err, result){ 
+    collection.update({_id: userid}, {$set: data}, {w: 1}, function(err, result){ 
       if(err){
         console.log('修改数据失败');
         callback(err);
