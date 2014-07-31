@@ -91,6 +91,7 @@ router.get('/update', function(req, res){
  * 返回：雇员数组
  */
 router.get('/employees', function(req, res){
+  /*
   Employee.get(req.body.company, function(err, docs){
     if(!docs){
       res.send({
@@ -103,6 +104,20 @@ router.get('/employees', function(req, res){
         employees: docs,
       });
     }
+  });
+  */
+
+  var employees = [];
+  var i;
+  for (i = 0; i < 100; i++) {
+    employees[i] = {
+      _id: i,
+      name: 'Employee ' + i
+    }
+  }
+  res.render('company/employees', {
+    title:'Employees',
+    employees : employees
   });
 });
 
@@ -123,12 +138,14 @@ router.post('/update', function(req, res){
  * 参数：无形参
  * 返回：
  */
-router.get('/employees/add', function(req, res){
-  res.render('addemploy',{
+router.get('/employee/add', function(req, res){
+  res.render('company/add_employee',{
     title: '增加雇员',
   });
 });
+
 router.post('/employees/add', function(req, res){
+  /*
   var newEmployee = new User({
     company          :   req.body.company,         //公司的id
     name             :   req.body.name,
@@ -161,7 +178,12 @@ router.post('/employees/add', function(req, res){
       });
     }
   });
-  
+  */
+
+  res.send({
+    flag: false,
+    message: 'backend not set up yet'
+  })
 });
 
 /*
@@ -169,7 +191,7 @@ router.post('/employees/add', function(req, res){
  * 参数：雇员ID和被修改对象
  * 返回：
  */
-router.post('/employees/update', function(req, res){
+router.post('/employee/update', function(req, res){
   //update的data部分必须是MongoDB的对象
   Employee.change(req.body._id, req.data, function(err){
     if(err){
@@ -183,7 +205,7 @@ router.post('/employees/update', function(req, res){
         message: '更新成功',
       });
     }
-  }); 
+  });
 });
 
 /*
@@ -204,7 +226,7 @@ router.post('/employees/delete', function(req, res){
         message: '删除成功',
       });
     }
-  }); 
+  });
 });
 
 //批量功能
@@ -214,3 +236,23 @@ router.post('/company/employee/batch', function(req, res){
 
 router.post('/company/employee', function(req, res){
 });
+
+router.get('/employee/delete/:id', function(req, res){
+  res.send({
+    flag: false,
+    message: 'backend not set up yet'
+  })
+})
+
+router.get('/employee/update', function(req, res){
+  res.render('company/update_employee', {
+    title: 'company update employee',
+    employee : {
+      name: '我是雇员名字',
+      birthday: '21000101',
+      workDetail: {
+        workType: 'workType'
+      }
+    }
+  })
+})

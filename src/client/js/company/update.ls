@@ -2,18 +2,15 @@ $ !->
   $ 'form#user-update-company' .on 'submit', (event)!->
     event.preventDefault!
 
-    info = {}
+    company = {}
     contacts = {}
 
     $ '.company-info' .each (index, element)!->
-      console.log $(this).attr('value')
-      info[$(this).attr('name')] = $(this).attr('value')
+      company[$(this).attr('name')] = $(this).attr('value')
     $ '.company-contacts' .each (index, element)!->
       contacts[$(this).attr('name')] = $(this).attr('value')
 
-    company =
-      info : info
-      contacts : contacts
+    company[contacts] = contacts
 
     $.post '/company/update', company, (data) !->
       if data.flag

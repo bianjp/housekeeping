@@ -127,7 +127,7 @@ router.post('/company/update', function(req, res) {
 
 router.get('/company/delete/:id', function(req, res) {
   res.send({
-    flag: true,
+    flag: false,
     message: 'backend not set up yet..'
   });
 })
