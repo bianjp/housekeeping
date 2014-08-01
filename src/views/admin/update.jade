@@ -1,7 +1,7 @@
 extends ../layout
 
 block content
-  form.ui.form.segment#admin-add-company
+  form.ui.form.segment#admin-update-company
     .ui.error.message
       p#error
     .ui.warning.message
@@ -9,16 +9,16 @@ block content
     .inline.field
       label 账号
       .ui.left.labeled.icon.input
-        input#username(type='text', autofocus)
+        input#username(type='text', value = company.username, autofocus)
         i.user.icon
+    .inline.field
+      label 公司名称
+      .ui.left.labeled.icon.input
+        input#company-name(type='text', value = company.companyName)
+        i.home.icon
     .inline.field
       label 密码
       .ui.left.labeled.icon.input
         input#password(type='password')
         i.lock.icon
-    .inline.field
-      label 公司名称
-      .ui.left.labeled.icon.input
-        input#company-name(type='text')
-        i.home.icon
-    button.ui.blue.submit.button 添加
+    button.ui.blue.submit.button 修改

@@ -19,8 +19,17 @@ router.get('/', function(req, res){
     rF.respondGet(res , 'adminMainPage' , docs) ;
     }) ;
   */
+  var companies = [];
+  var i;
+  for (i = 0; i < 100; i++) {
+    companies[i] = {
+      _id: i,
+      name: 'Company ' + i
+    }
+  }
   res.render('admin/index', {
-    title:'admin homepage'
+    title:'admin homepage',
+    companies: companies
   });
 });
 
@@ -95,15 +104,30 @@ router.post('/company/add', function(req, res) {
     }) ;
   */
   res.send({
-    flag: false
+    flag: false,
+    message: 'backend not set up yet'
   });
 });
 
 //系统管理员修改公司信息页面
 router.get('/company/update', function(req, res) {
-  res.send("系统管理员准备修改公司信息");
+  res.render('admin/update',{
+    title: 'admin update company',
+    flag: true,
+    company: {
+      username: '我是用户名称',
+      companyName: '我是公司名称'
+    }
+  })
 });
 
 router.post('/company/update', function(req, res) {
   res.send("系统管理员修改公司信息");
 });
+
+router.get('/company/delete/:id', function(req, res) {
+  res.send({
+    flag: false,
+    message: 'backend not set up yet..'
+  });
+})

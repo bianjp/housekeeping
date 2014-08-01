@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  include menu
+
+  form.ui.form#company-add-employee
+    .grouped.inline.fields
+      - var employeeInfo = ['name', 'birthday', 'nativePlace', 'isMarried', 'education', 'height', 'weight', 'certificates', 'languages', 'workExperience', 'cookingStyle', 'specialities']
+      - var employeeWorkDetail = ['workType', 'workArea', 'workContent', 'salary', 'workTime', 'vacation']
+
+      - for (var i = 0; i < employeeInfo.length; i++)
+        .field
+          label #{employeeInfo[i]}
+          input.employee-info(type='text' name=employeeInfo[i] value='')
+
+      h3.ui.header 工作详情
+      - for (var i = 0; i < employeeWorkDetail.length; i++)
+        .field
+          label #{employeeWorkDetail[i]}
+          input.employee-work-detail(type='text' name=employeeWorkDetail[i] value='')
+
+      h3.ui.header 保姆简介
+      .field
+        textarea.employee-info(name='description', rows='5', cols='48', value='')
+
+      button.ui.blue.submit.button 添加

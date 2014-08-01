@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+  include menu
+
+  form.ui.form#user-update-company
+    .grouped.inline.fields
+      .field
+        label 公司名称
+        input.company-info(type='text' name='name' value=company.name)
+      .field
+        label logo
+        input.company-info(type='file' name='logo' value='')
+      .field
+        label 业务范围
+        input.company-info(type='text' name='businessScope' value=company.businessScope.join(', '))
+      .field
+        label 服务区域
+        input.company-info(type='text' name='regions' value=getServiceRegions(company.serviceRegions))
+      .field
+        label 服务保障
+        input.company-info(type='text' name='guarantees' value=company.guarantees.join(', '))
+
+      h3.ui.header 联系方式
+      .field
+        label 网站
+        input.company-contacts(type='text', name='website', value=company.contacts.website)
+      .field
+        label Email
+        input.company-contacts(type='text', name='email', value=company.contacts.email)
+      .field
+        label 固定电话
+        input.company-contacts(type='text', name='fixedPhone', value=company.contacts.fixedPhone)
+      .field
+        label 手机
+        input.company-contacts(type='text', name='mobilePhone', value=company.contacts.mobilePhone)
+      .field
+        label QQ
+        input.company-contacts(type='text', name='QQ', value=company.contacts.QQ)
+      .field
+        label 地址
+        input.company-contacts(type='text', name='address', value=company.contacts.address)
+      .field
+        label 联系人
+        input.company-contacts(type='text', name='contact', value=company.contacts.contact)
+
+      h3.ui.header 公司简介
+      .field
+        textarea.company-info(name='about', rows='5', cols='48', value='')
+
+      button.ui.blue.submit.button 修改
