@@ -1,0 +1,59 @@
+$item-width: 450px;
+$img-width: 100px;
+
+#search-company-result .item {
+  position: relative;
+  height: 200px;
+  width: $item-width;
+  margin: 10px;
+  padding: 0.5em;
+
+  -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  border-bottom: 0.2em solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.33em;
+  -webkit-transition: -webkit-box-shadow 0.2s ease;
+  -moz-transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
+
+  img {
+    width: $img-width;
+    height: $img-width;
+  }
+
+  .header {
+    margin: 5px;
+  }
+
+  .content {
+    & > div {
+      width: $item-width - $img-width - 30px;
+      line-height: 1.4em;
+      clear: both;
+
+      span {
+        float: left;
+        display: inline-block;
+        width: 80px;
+        color: #333333;
+      }
+
+      div {
+        float: left;
+        width: $item-width - $img-width - 110px;
+      }
+    }
+  }
+
+
+  .button {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    display: none;
+  }
+
+  &:hover .button {
+    display: block;
+  }
+}

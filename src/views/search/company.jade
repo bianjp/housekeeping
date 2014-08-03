@@ -1,0 +1,99 @@
+extends ../layout
+
+block content
+  include search_bar
+
+  form(action='/search/company')#search-company
+  .ui.action.input
+    input(type='text', placeholder='搜索中介公司')
+    .ui.button.submit
+      i.search.icon
+
+  .ui.segment#search-options
+    .ui.list
+      .item(data-option='serviceRegions')
+        .ui.blue.horizontal.label 服务区域
+        a.ui.label 番禺区
+        a.ui.label 海珠区
+        a.ui.label 天河区
+        a.ui.label 花都区
+        a.ui.label 白云区
+      .item(data-option='businessScope')
+        .ui.blue.horizontal.label 服务类型
+        a.ui.label 钟点工
+        a.ui.label 宅速洁
+        a.ui.label 保姆
+        a.ui.label 育儿嫂
+        a.ui.label 护理
+        a.ui.label 早出晚归
+      .item(data-option='guarantees')
+        .ui.blue.horizontal.label 提供保障
+        a.ui.label 实名赔付
+        a.ui.label 准时达
+        a.ui.label 30天换人
+
+  .ui.info.message 共有 10 个公司符合搜索条件
+
+  .ui.horizontal.list#search-company-result
+    .item
+      img.ui.left.floated.image(src='/images/logos/logo.jpg')
+      .content
+        .ui.header 汇爱家政
+        div
+          span 服务类型
+          div 保姆，月嫂
+        div
+          span 服务区域
+          div 番禺区，天河区
+        div
+          span 雇员数量
+          div 323
+        div
+          span 地址
+          div 天河区某大厦338asdfafasdfasf天河区某大厦
+        div
+          span 联系方式
+          div 13800000000
+      a.ui.fluid.blue.button 查看
+
+    .item
+      img.ui.left.floated.image(src='/images/logos/logo.jpg')
+      .content
+        .ui.header 汇爱家政
+        div
+          span 服务类型
+          div  保姆，月嫂
+        div
+          span 服务区域
+          div 番禺区，天河区
+        div
+          span 雇员数量
+          div 323
+        div
+          span 地址
+          div 天河区某大厦天河区某大厦天河区某大厦天河区某大厦
+        div
+          span 联系方式
+          div 13800000000
+      a.ui.fluid.blue.button 查看
+
+    .item
+      img.ui.left.floated.image(src='/images/logos/logo.jpg')
+      .content
+        .ui.header 汇爱家政
+        div
+          span 服务类型
+          div 保姆，月嫂
+        div
+          span 服务区域
+          div 番禺区，天河区
+        div
+          span 雇员数量
+          div 323
+        div
+          span 地址
+          div 天河区某大厦338
+        div
+          span 联系方式
+          div 13800000000
+      a.ui.fluid.blue.button 查看
