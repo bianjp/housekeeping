@@ -49,7 +49,7 @@ router.get('/', function(req, res){
       contact: '张三'
     }
   };
-  res.render('company',{
+  res.render('company/index',{
     title: company.name,
     company: company
   });

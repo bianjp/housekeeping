@@ -2,11 +2,12 @@
   background-color: blue;
   color: white;
   margin-bottom: 50px;
+  min-height: 150px;
 }
 
-#employee-photo {
-  width: 200px;
-  height: 200px;
+#employee-header #employee-photo {
+  width: 150px;
+  height: 150px;
 }
 
 #employee-certificates {

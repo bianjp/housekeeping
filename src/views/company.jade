@@ -1,0 +1,77 @@
+extends layout
+
+block content
+
+  #company-header
+    .ui.left.floated.image#company-logo
+      img(src= company['logo'])
+    .ui.list#company-guarantees
+      - each val in company['guarantees']
+        .item
+          .ui.orange.label= val
+    #employee-header-info
+      h1= company['name']
+
+  .main.container#company-info
+    .ui.form
+      .grouped.inline.fields
+        h3.ui.header 基本信息
+        .field
+          label 注册时间
+          p= formatDate(company.registeredAt)
+        .field
+          label 业务范围
+          p= company.businessScope.join(', ')
+        .field
+          label 服务区域
+          p= getServiceRegions(company.serviceRegions)
+        .field
+          label 服务保障
+          p= company.guarantees.join(', ')
+
+        h3.ui.header 联系方式
+        .field
+          label 网站
+          p
+            a(href=company.contacts.website)= company.contacts.website
+        .field
+          label Email
+          p
+            a(href='mailto:' + company.contacts.email)= company.contacts.email
+        .field
+          label 固定电话
+          p= company.contacts.fixedPhone
+        .field
+          label 手机
+          p= company.contacts.mobilePhone
+        .field
+          label QQ
+          p= company.contacts.QQ
+        .field
+          label 地址
+          p= company.contacts.address
+        .field
+          label 联系人
+          p= company.contacts.contact
+    h3.ui.header 公司简介
+    .container!= company.about
+
+  #employees-cards-list
+    h3.ui.header 该公司有#{company['employeeCount']}个雇员
+    .ui.horizontal.list
+      - each e in employees
+        .item
+          #employee-card
+            .ui.left.floated.image#employee-photo
+              img(src= e['photo'])
+            #info
+              = '姓名: ' + e['name']
+              br
+              = '年龄: ' + ( (new Date().getFullYear() ) - e['birthday'].getFullYear())
+              br
+              = '资历: ' + e['workExperience']
+              br
+              = '服务项目: '
+              - each val in e['workDetail']
+                = val['workType'] + ' '
+          a.ui.teal.button#check-bar(href='/employee/:id=' + e['_id']) 查看

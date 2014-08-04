@@ -1,0 +1,49 @@
+#company-header{
+  background-color: blue;
+  color: white;
+  margin-bottom: 50px;
+  min-height: 150px;
+}
+
+#company-logo {
+  width: 150px;
+  height: 150px;
+}
+
+#company-guarantees {
+  float: right;
+  width: 100px;
+}
+
+#company-info h3{
+  background-color: dimgray;
+}
+
+#employees-cards-list h3 {
+  background-color: dimgray;
+  text-align: center;
+}
+
+#employees-cards-list .item {
+  border-style: solid;
+  border-width: 1px;
+}
+
+#employees-cards-list #check-bar {
+  width: 300px;
+  text-align: center;
+  background: teal;
+}
+
+#employee-card {
+  width: 300px;
+}
+
+#employee-card #employee-photo {
+  width: 100px;
+  height: 100px;
+}
+
+#employee-card #info {
+  min-height: 100px;
+}
