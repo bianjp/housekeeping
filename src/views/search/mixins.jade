@@ -1,0 +1,84 @@
+mixin workArea(areas)
+  .ui.top.attached.inverted.blue.header 工作地区
+  .ui.attached.segment
+    //- .ui.segment will modify the margin of its first child
+    span
+    each area in areas
+      a.ui.label= area
+
+mixin workContent(type)
+  .ui.top.attached.inverted.blue.header 工作内容
+  .ui.attached.segment
+    span
+    - var contents = [{title: '煮饭'}, {title: '打扫'}, {title: '照顾老人'}]
+    each content in contents
+      a.ui.label= content.title
+        input(type='checkbox', name='workContent', value=content.title)
+
+mixin workType(type)
+  - var types = ['钟点工', '宅速洁', '保姆', '育儿嫂', '护理', '早出晚归']
+  .ui.grid#work-type
+    .ui.center.aligned.header.three.wide.column= types[type]
+    .ui.thirteen.wide.column
+      case type
+        when 0
+          div
+            span 服务对象：
+            | 适合所有家庭
+          div
+            span 市场价格：
+            | 18-25元/小时
+          div
+            span 服务内容：
+            | 做饭、保洁、照顾小孩、照顾老人为主
+
+        when 1
+          div
+            span 工作内容：
+            | 房内地面、台面、厨房、卫生间、整理物品、清除垃圾
+          div 请自备清洁工具和清洁剂
+          div 工作内容不包括二楼及以上的外窗玻璃擦拭，以及抽油烟机拆洗、新房开荒保洁、地毯清洗等专业保洁
+
+        when 2
+          div
+            span 服务对象：
+            | 有小孩、老人的家庭
+          div
+            span 市场价格：
+            | 3500-4500元/月为主
+          div
+            span 服务内容：
+            | 家务、带孩子、照顾老人
+
+        when 3
+          div
+            span 服务对象：
+            | 1个月以上的宝宝
+          div
+            span 市场价格：
+            | 4000-6000元/月为主
+          div
+            span 服务内容：
+            | 3-36个月的宝宝专带、辅助家务
+
+        when 4
+          div
+            span 服务对象：
+            | 老人
+          div
+            span 市场价格：
+            | 2500-4000元/月为主
+          div
+            span 服务内容：
+            | 照顾老人、保洁、做饭
+
+        when 5
+          div
+            span 服务对象：
+            | 适合所有家庭
+          div
+            span 市场价格：
+            | 上海地区主要以3000-4000元/月为主
+          div
+            span 服务内容：
+            | 做饭、保洁、照顾小孩、照顾老人为主

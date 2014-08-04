@@ -1,5 +1,5 @@
 $ !->
-  if $ '#search-options' .length
+  if location.pathname == '/search/company'
     getSearchOptions = !->
       options = {}
       $ '#search-options .item' .each !->
@@ -24,3 +24,9 @@ $ !->
 
     $ '#search-options' .on 'click', '.label', (event)!->
       $ this .toggleClass 'blue'
+
+  if location.pathname == '/search'
+    $ '#search-employee-options' .on 'click', '.label', !->
+      label = $ this
+      label.toggleClass 'blue'
+      label.find 'input' .prop 'checked', label.is('.blue')
