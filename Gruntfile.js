@@ -26,14 +26,14 @@ module.exports = function(grunt) {
     livescript: {
       server: {
         files: [
-          { 
+          {
             expand: true,
             cwd: '.',
             src: 'app.ls',
             dest: '.',
             ext: '.js'
           },
-          { 
+          {
             expand: true,
             cwd: 'src/config',
             src: '*.ls',
@@ -98,12 +98,25 @@ module.exports = function(grunt) {
         spawn: false
       },
 
+      jade: {
+        options: {
+          livereload: true
+        },
+        files: ['src/views/**/*.jade']
+      },
+
       stylesheets: {
+        options: {
+          livereload: true
+        },
         files: ['src/client/css/**/*.scss'],
         tasks: ['clean:css', 'compass', 'concat:css']
       },
 
       javascripts_client: {
+        options: {
+          livereload: true
+        },
         files: ['src/client/js/**/*.ls'],
         tasks: ['clean:js_client', 'livescript:client']
       },
@@ -128,7 +141,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-contrib-watch');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
   // Define tasks
   grunt.registerTask('default', ['clean', 'livescript', 'copy', 'compass', 'concat', 'express', 'watch']);
   grunt.registerTask('build', ['clean', 'livescript', 'copy', 'compass', 'concat']);
