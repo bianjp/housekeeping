@@ -1,0 +1,68 @@
+extends layout
+
+block content
+  - var info = ['nativePlace', 'education', 'height', 'weight', 'languages', 'workExperience']
+  - var workDetail = ['workArea', 'workContent', 'salary', 'workTime', 'vacation']
+  - var infoChinese = ['籍贯', '学历', '身高', '体重', '语言', '工作经验']
+  - var workDetailChinese = ['工作地点', '工作内容', '薪酬', '工作时间', '假日要求']
+
+  #employee-header
+    .ui.left.floated.image#employee-photo
+      img(src= employee['photo'])
+    .ui.list#employee-certificates
+      - each val in employee['certificates']
+        .item
+          .ui.orange.label= val
+    #employee-header-info
+        h1= employee['name']
+        h2= company['name']
+        p= company['contacts']['fixedPhone'] + ' ' +  company['contacts']['mobilePhone']
+
+  .ui.vertical.segment#employee-info
+    h3.ui.header 基本资料
+    .ui.very.relaxed.horizontal.list
+      .item
+        .content
+          - if (employee['gender'] === 'female')
+            | 性别：女
+          - else
+            | 性别: 男
+      .item
+        .content= '年龄: ' + ( (new Date().getFullYear() ) - employee['birthday'].getFullYear())
+      .item
+        .content
+          - if (employee['isMarried'])
+            | 婚姻状况：已婚
+          - else
+            | 婚姻状况：未婚
+        .content
+      - each val, index in info
+        .item
+          .content
+            = infoChinese[index] + ': ' + employee[val]
+
+    - each work in employee['workDetail']
+      h3.ui.header= work['workType']
+      .ui.list
+        - each detail, index in workDetail
+          .item
+            = workDetailChinese[index] + ': ' + work[detail]
+
+    h3.ui.header 保姆特色
+    .ui.list
+      - if (employee['cookingStyle'].length > 0)
+        .item
+          | 烹饪: 
+          .ui.horizontal.bulleted.list
+            - each val in employee['cookingStyle']
+              .item
+                = val
+      - if (employee['specialities'].length > 0)
+        .item
+          | 特长: 
+          .ui.horizontal.bulleted.list
+            - each val in employee['specialities']
+              .item
+                = val
+      .item
+        = employee['description']
