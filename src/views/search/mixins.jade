@@ -1,14 +1,15 @@
 mixin workArea(areas)
   .ui.top.attached.inverted.blue.header 工作地区
-  .ui.attached.segment
+  .ui.attached.segment.work-area
     //- .ui.segment will modify the margin of its first child
     span
     each area in areas
       a.ui.label= area
+        input(type='radio', name='workArea', value=area)
 
 mixin workContent(type)
   .ui.top.attached.inverted.blue.header 工作内容
-  .ui.attached.segment
+  .ui.attached.segment.work-content
     span
     - var contents = [{title: '煮饭'}, {title: '打扫'}, {title: '照顾老人'}]
     each content in contents

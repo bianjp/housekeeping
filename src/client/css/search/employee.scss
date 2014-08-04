@@ -1,8 +1,58 @@
-#search-employee-options input[type="checkbox"] {
+#search-employee-options input[type="checkbox"],
+#search-employee-options input[type="radio"] {
   display: none;
 }
 
 #work-type .header {
   font-size: 2rem;
   margin-top: 1rem;
+}
+
+#search-result .item {
+  position: relative;
+
+  & > img {
+    width: 100px;
+    height: 125px;
+  }
+
+  .content > div {
+    clear: both;
+
+    & > span {
+      float: left;
+      width: 80px;
+    }
+
+    & > div {
+      float: left;
+    }
+  }
+
+  & > .button {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    display: none;
+  }
+
+  &:hover > .button {
+    display: block;
+  }
+
+  .company {
+    width: auto;
+
+    .header {
+      display: inline-block;
+      vertical-align: bottom;
+      margin: 0 20px 0 0;
+    }
+
+    img {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+  }
 }
