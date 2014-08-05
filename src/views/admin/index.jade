@@ -7,7 +7,7 @@ block content
   #companies-list
     - var i = 0
     .ui.divided.list
-      while i < 100
+      while i < companies[i]
         .item
           .right.floated.tiny.teal.ui.button.delete-company-button(
             href='/admin/company/delete/:id=' + companies[i]._id) Delete
