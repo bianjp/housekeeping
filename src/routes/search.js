@@ -159,10 +159,24 @@ router.post('/employee', function(req, res){
  */
 
 router.get('/company',function(req, res){
-  res.render("search/company",{
-    title : "中介搜索",
+  db.collection('companies', function(err, collection) {
+    if(err){
+      //D
+      console.log('数据库接入错误，错误代码D');
+    } else {
+      collection.find( {name : req.query.name}).toArray(function(err, docs){
+        if(docs){
+          res.render("search/company",{
+            title : "中介搜索",
+            companies : docs,
+          });
+        }else{
+          console.log("未找到相关中介");
+        }
+      });
+    }
   });
-});
+ });
 
 router.post('/company', function(req, res){
   //obj_c is company object
