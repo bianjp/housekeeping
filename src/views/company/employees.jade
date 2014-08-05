@@ -14,7 +14,8 @@ block content
       .item
         .ui.segment
           a.ui.teal.cardbars.add-employee.button(href="/company/employee/batch") 批量导入
-      - each e in employees
+      - var thisYear = new Date().getFullYear()
+      each e in employees
         .item
           .ui.segment
             #employee-card
@@ -23,7 +24,7 @@ block content
               #info
                 = '姓名: ' + e['name']
                 br
-                = '年龄: ' + ( (new Date().getFullYear() ) - e['birthday'].getFullYear())
+                = '年龄: ' + (thisYear - e['birthday'].getFullYear())
                 br
                 = '资历: ' + e['workExperience']
                 br
@@ -33,19 +34,3 @@ block content
             a.ui.blue.button.cardbars.update-employee(href='/company/employee/update?id=' + e['_id']) 编辑资料
             br
             .ui.red.button.cardbars.delete-employee(href='/company/employee/delete/:id=' + e['_id']) 删除该雇员
-//
-  #add-employee-button
-    a.massive.ui.button(href='/company/employee/add') add-employee-button
-  #employees-list
-    - var i = 0
-    .ui.divided.list
-      while i < 100
-        .item
-          .right.floated.tiny.teal.ui.button.delete-employee-button(
-            href='/company/employee/delete/:id=' + employees[i]._id) Delete
-          a.right.floated.tiny.teal.ui.button.update-employee-button(
-            href='/company/employee/update?id=' + employees[i]._id) Edit
-          // img.ui.avatar.image(src='' alt='')
-          .content
-            .header= employees[i].name
-        - i = i + 1

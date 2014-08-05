@@ -4,6 +4,7 @@ $ !->
     dataUp =
       username: $ '#username' .val!
       companyName: $ '#company-name' .val!
+      companyName: $ '#company-name' .val!
 
     $.post '/admin/company/add', dataUp, (dataDown) !->
       if dataDown.flag
