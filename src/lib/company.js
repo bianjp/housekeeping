@@ -8,7 +8,7 @@ var operation =
     function(collection , company , callback) {return(collection.findOne(company , callback)) ;} ,
     function(collection , company , callback) {return(collection.find(company).toArray(callback)) ;} ,
     function(collection , company , callback) {return(collection.remove(company , callback)) ;} ,
-    function(collection , company , update , callback) {return(collection.update(company , {$set : update} , callback) ;}
+    function(collection , company , update , callback) {return(collection.update(company , {$set : update} , callback)) ;}
   ] ;
 
 //构造函数
