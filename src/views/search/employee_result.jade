@@ -11,7 +11,6 @@ block content
     .ui.list
       .item(data-option='age')
         .ui.blue.horizontal.label 年龄范围
-        a.ui.label(data-value='') 不限
         a.ui.label(data-value='0-30') 30岁以下
         a.ui.label(data-value='31-35') 30-35岁
         a.ui.label(data-value='36-40') 35-40岁
@@ -19,7 +18,6 @@ block content
         a.ui.label(data-value='45-80') 45岁以上
       .item(data-option='workExperience')
         .ui.blue.horizontal.label 工作经验
-        a.ui.label(data-value='') 不限
         a.ui.label(data-value='1-2') 1-2年
         a.ui.label(data-value='2-3') 2-3年
         a.ui.label(data-value='3-4') 3-4年
@@ -27,7 +25,6 @@ block content
         a.ui.label(data-value='5-20') 5年以上
       .item(data-option='education')
         .ui.blue.horizontal.label 学历
-        a.ui.label(data-value='') 不限
         a.ui.label 小学
         a.ui.label 初中
         a.ui.label 高中
@@ -36,14 +33,12 @@ block content
         a.ui.label 其它
       .item(data-option='salary')
         .ui.blue.horizontal.label 薪资范围
-        a.ui.label(data-value='') 不限
         a.ui.label(data-value='0-30') 30元/小时以下
         a.ui.label(data-value='30-35') 30-35元/小时
         a.ui.label(data-value='35-40') 35-40元/小时
         a.ui.label(data-value='40-100') 40元/小时以上
       .item(data-option='languages')
         .ui.blue.horizontal.label 擅长语言
-        a.ui.label(data-value='') 不限
         a.ui.label 普通话
         a.ui.label 上海话
         a.ui.label 粤语
@@ -54,7 +49,6 @@ block content
         a.ui.label 其它
       .item(data-option='guarantees')
         .ui.blue.horizontal.label 提供保障
-        a.ui.label 不限
         a.ui.label 快速响应
         a.ui.label 准时达
         a.ui.label 30日换人
@@ -72,6 +66,7 @@ block content
 
   .ui.segment#search-result
     .ui.list
+      - var thisYear = new Date().getFullYear()
       each employee in employees
         .item
           img.ui.left.floated.image(src=employee.photo)
@@ -79,7 +74,7 @@ block content
             .ui.header= employee.name
             div
               span 年龄：
-              div= employee.birthday
+              div= thisYear - employee.birthday.getFullYear()
             div
               span 工作经验：
               div= employee.workExperience

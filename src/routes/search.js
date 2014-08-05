@@ -2,6 +2,9 @@ var db = require('../lib/db').getConnection();
 var router    = require('express').Router();
 module.exports = router;
 
+var async = require('async');
+var workTypes = ['钟点工', '宅速洁', '保姆', '育儿嫂', '护理', '早出晚归'];
+
 /*
  * 功能：雇员搜索-页面1
  * 参数：[0, 5]
@@ -23,66 +26,82 @@ module.exports = router;
 router.get('/',function(req, res){
   res.render("search/employee",{
     title : "雇员搜索",
-    type : req.query.type,
+    type : req.query.type || 0,
   });
 });
 
-function findcompany(docs){
-  db.collection('companies', function(err, collection){
-    if (err){
-      console.log('数据库接入错误，从employee到company');
-    } else {
-      ids = docs.map(function(item){
+var getEmployees = function(query, options, outsideCallback){
+  var employees;
+  async.waterfall([
+    function(callback){
+      db.collection('employees', callback);
+    },
+
+    function(col, callback){
+      col.find(query, options).toArray(callback);
+    },
+
+    function(docs, callback){
+      if (!docs || !docs.length){
+        outsideCallback(null, []);
+      }
+      else {
+        employees = docs;
+        db.collection('companies', callback);
+      }
+    },
+
+    function(col, callback){
+      var ids = employees.map(function(item){
         return item.company;
       });
-      collection.find({_id : {$in : ids}}, {fields: {logo:1, name:1}}).toArray(function(err, temp_docs){
-        var temp;
-        for(var i = 0; com_docs.length; i++){
-          temp[temp_docs[i]._id] = temp_docs[i];
-        }
-        for(var j = 0; docs.length; j++){
-          docs[j]["company_property"] = temp[docs[j].company];
-        }
-      });
+      col.find({_id: {$in: ids}}, {fields: {logo: 1, name: 1}}).toArray(callback);
     }
+  ],
+
+  function(err, items){
+    var docs = employees;
+    if (!err && items){
+      var temp = {};
+      for(var i = 0; i < items.length; i++){
+        temp[items[i]._id.toString()] = items[i];
+      }
+      for(var j = 0; j < docs.length; j++){
+        docs[j]["company_property"] = temp[docs[j].company.toString()];
+      }
+    }
+    outsideCallback(err, docs);
   });
-}
+};
+
+var getSearchOptions = function(req){
+  var query = {
+    "workDetail.workType": workTypes[req.query.type || 0]
+  };
+  if (req.query.workArea){
+    query["workDetail.workArea"] = req.query.workArea;
+  }
+  if (req.query.workTime){
+    query["workDetail.workTime"] = req.query.workTime;
+  }
+  if (req.query.workContent){
+    var workContent = req.query.workContent;
+    if (workContent instanceof Array)
+      query["workDetail.workContent"] = {$all: workContent};
+    else
+      query["workDetail.workContent"] = workContent;
+  }
+  return query;
+};
 
 router.get('/employee', function(req, res){
-  //obj_e is employee object
-  var obj_e = {
-    "workDetail.workType"   :   req.query.workType,           //工作类型
-    "workDetail.workArea"   :   req.query.workArea, //工作地区
-    "workDetail.workTime"   :   req.query.workTime, //工作时间
-    "workDetail.workContent":   {$all : [req.query.workContent]}, //工作内容
-    //护理对象
-  };
-  //去掉冗余属性
-  if(req.query.workType != "宅速洁"){
-    delete obj_e["workDetail.workTime"];
-  } else {
-    delete obj_e["workDetail.workContent"];
-  }
-  //存入session中
-  req.session.obj_e = obj_e;
-
-  db.collection('employees', function(err, collection) {
-    if(err){
-      //C
-      console.log('数据库接入错误，错误代码C');
-    } else {
-      collection.find( obj_e, options_e ).toArray(function(err, docs){
-        if(docs){
-          findcompany(docs);
-          res.render("search/employee_result",{
-            title : "雇员搜索",
-            employees : docs,
-          });
-         }else{
-           console.log("未找到相关雇员");
-         }
-      });
-    }
+  var query = getSearchOptions(req);
+  getEmployees(query, {}, function(err, docs){
+    res.render("search/employee_result", {
+      title : "雇员搜索",
+      type: req.query.type || 0,
+      employees : docs || []
+    });
   });
 });
 
@@ -93,26 +112,24 @@ router.get('/employee', function(req, res){
  */
 
 router.post('/employee', function(req, res){
-  //query is the full.
-  //年龄信息
-  var query = req.session.obj_e;
+  var query = getSearchOptions(req);
 
   if(req.body.age){
-    var stryear = req.body.age.split('-');
-    var lyear = parseInt(stryear[0]);
-    var uyear = parseInt(stryear[1]);
-    var date1 = new Date();
-    var date2 = new Date(date1.setFullYear(date1.getYear() - lyear));
-    var date3 = new Date(date1.setFullYear(date1.getYear() - uyear));
-    query["birthday"] = {$gte : date3, $lte : date2};
+    var age = req.body.age.split('-');
+    var thisYear = new Date().getFullYear();
+    query["birthday"] = {
+      $gte: new Date(thisYear - parseInt(age[1]), 0, 1),
+      $lte: new Date(thisYear - parseInt(age[0]), 0, 1)
+    };
   }
 
   //资历
   if(req.body.workExperience){
-    var strexp = req.body.workExperience.split('-');
-    var lexp = parseInt(strexp[0]);
-    var uexp = parseInt(strexp[1]);
-    query["workExperience"] = {$gte : lexp, $lte : uexp};
+    var experience = req.body.workExperience.split('-');
+    query["workExperience"] = {
+      $gte: parseInt(experience[0]),
+      $lte: parseInt(experience[1])
+    };
   }
 
   //薪酬
@@ -121,45 +138,35 @@ router.post('/employee', function(req, res){
     var lsal = parseInt(strsal[0]);
     var usal = parseInt(strsal[1]);
     query['$or'] = [
-                  {upsalary :{$gte : lsal, $lte : usal}},
-                  {lowsalary :{$gte : lsal, $lte : usal}}
-               ];
+      {upsalary :{$gte : lsal, $lte : usal}},
+      {lowsalary :{$gte : lsal, $lte : usal}}
+    ];
   }
   //语言
   if(req.body.languages){
-    query["languages"] = {$in : req.body.languages};
+    var languages = req.body.languages instanceof Array ? req.body.languages : [req.body.languages];
+    query["languages"] = {$in: languages};
   }
 
   //保障内容
   if(req.body.guarantees){
-    query["guarantees"] = {$in : req.body.guarantees};
+    var guarantees = req.body.guarantees instanceof Array ? req.body.guarantees : [req.body.guarantees];
+    query["guarantees"] = {$in: guarantees};
   }
 
   //附加选项
-  var options_e = {
+  var options = {
   //分页选项
   //"limit": 20,
   //"skip" : 10,
     "sort" : [['workDetail.salary', 'asc'], ['name', 'asc']]
   };
-
-  db.collection('employees', function(err, collection) {
-    if(err){
-      //A
-      console.log('数据库接入错误，错误代码A');
-    } else {
-      collection.find( query, options_e ).toArray(function(err, docs){
-        if(docs){
-           findcompany(docs);
-           res.render("search/employee_result",{
-            title : "雇员搜索",
-            employees : docs,
-           });
-         }else{
-           console.log("未找到相关雇员");
-         }
-      });
-    }
+console.log(query);
+  getEmployees(query, options, function(err, docs){
+    res.send({
+      flag: !err,
+      employees: docs || []
+    });
   });
 });
 

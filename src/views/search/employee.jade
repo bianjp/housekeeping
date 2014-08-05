@@ -3,13 +3,13 @@ extends ../layout
 block content
   include search_bar
   include mixins
-
+  - console.log('type: ' + type);
   - type = parseInt(type)
 
   +workType(type)
 
   form#search-employee-options(action='/search/employee', method='get')
-    input(type='hidden', name='workType', value=type)
+    input(type='hidden', name='type', value=type)
 
     - var areas = ['番禺区', '海珠区', '天河区', '花都区', '白云区']
     +workArea(areas)

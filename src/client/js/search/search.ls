@@ -19,7 +19,6 @@ $ !->
       keyword = $ '#search-company input' .val!
       if keyword
         options.name = keyword
-      console.log options
       $ '#result-count' .text ''
       $ '#search-company-result' .empty!
       $.post '/search/company', options, (data)!->
@@ -107,9 +106,10 @@ $ !->
       $ '#search-result .list' .empty!
 
       data = getFilterOptions!
-      $.post '/search/employee', data, (data)!->
-        $ '#result-count' .text data.length
-        console.log data
+      $.post location.href, data, (data)!->
+        if !data.flag
+          return
+        $ '#result-count' .text data.employees.length
         html = [
             '<div class="item"><img class="ui left floated image" src="'
             null  # 1 photo
@@ -137,7 +137,7 @@ $ !->
         ]
 
         container = $ '#search-result .list'
-        for employee in data
+        for employee in data.employees
           html[1] = employee.photo
           html[3] = employee.name
           html[5] = employee.age
