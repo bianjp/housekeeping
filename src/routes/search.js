@@ -95,34 +95,45 @@ router.get('/employee', function(req, res){
 router.post('/employee', function(req, res){
   //query is the full.
   //年龄信息
-  var stryear = req.body.age.split('-');
-  var lyear = parseInt(stryear[0]);
-  var uyear = parseInt(stryear[1]);
-  var date1 = new Date();
-  var date2 = new Date(date1.setFullYear(date1.getYear() - lyear));
-  var date3 = new Date(date1.setFullYear(date1.getYear() - uyear));
   var query = req.session.obj_e;
-  query["birthday"] = {$gte : date3, $lte : date2};
+
+  if(req.body.age){
+    var stryear = req.body.age.split('-');
+    var lyear = parseInt(stryear[0]);
+    var uyear = parseInt(stryear[1]);
+    var date1 = new Date();
+    var date2 = new Date(date1.setFullYear(date1.getYear() - lyear));
+    var date3 = new Date(date1.setFullYear(date1.getYear() - uyear));
+    query["birthday"] = {$gte : date3, $lte : date2};
+  }
 
   //资历
-  var strexp = req.body.workExperience.split('-');
-  var lexp = parseInt(strexp[0]);
-  var uexp = parseInt(strexp[1]);
-  query["workExperience"] = {$gte : lexp, $lte : uexp};
+  if(req.body.workExperience){
+    var strexp = req.body.workExperience.split('-');
+    var lexp = parseInt(strexp[0]);
+    var uexp = parseInt(strexp[1]);
+    query["workExperience"] = {$gte : lexp, $lte : uexp};
+  }
 
   //薪酬
-  var strsal = req.body.salary.split('-');
-  var lsal = parseInt(strsal[0]);
-  var usal = parseInt(strsal[1]);
-  query['$or'] = [
+  if(req.body.salary){
+    var strsal = req.body.salary.split('-');
+    var lsal = parseInt(strsal[0]);
+    var usal = parseInt(strsal[1]);
+    query['$or'] = [
                   {upsalary :{$gte : lsal, $lte : usal}},
                   {lowsalary :{$gte : lsal, $lte : usal}}
                ];
+  }
   //语言
-  query["languages"] = {$in : req.body.languages};
+  if(req.body.languages){
+    query["languages"] = {$in : req.body.languages};
+  }
 
   //保障内容
-  query["guarantees"] = {$in : req.body.guarantees};
+  if(req.body.guarantees){
+    query["guarantees"] = {$in : req.body.guarantees};
+  }
 
   //附加选项
   var options_e = {
