@@ -20,23 +20,48 @@ module.exports = router;
  * 返回: 结果
  */
 
-router.post('/', function(req, res){
+router.get('/',function(req, res){
+  res.render("search/employee",{
+    title : "雇员搜索",
+    type : req.query.type,
+  });
+});
+
+router.get('/employee', function(req, res){
   //obj_e is employee object
   var obj_e = {
-    "workDetail.workArea"   :   {$in : [req.body.workArea]}, //工作地区
-    "workDetail.workTime"   :   {$in : [req.body.workTime]}, //工作时间
+    "workDetail.workType"   :   req.body.workType,           //工作类型
+    "workDetail.workArea"   :   req.body.workArea, //工作地区
+    "workDetail.workTime"   :   req.body.workTime, //工作时间
     "workDetail.workContent":   {$all : [req.body.workContent]}, //工作内容
     //护理对象
   };
   //去掉冗余属性
-  if(req.body.workType != 1){
+  if(req.body.workType != "宅速洁"){
     delete obj_e["workDetail.workTime"];
   } else {
     delete obj_e["workDetail.workContent"];
   }
   //存入session中
   req.session.obj_e = obj_e;
-   
+
+  db.collection('employees', function(err, collection) {
+    if(err){
+      //C
+      console.log('数据库接入错误，错误代码C');
+    } else {
+      collection.find( query, options_e ).toArray(function(err, docs){
+        if(docs){
+          res.render("search/employee_result",{
+            title : "雇员搜索",
+            employees : docs, 
+          });
+         }else{
+           console.log("未找到相关雇员");
+         }
+      });
+    }
+  });
 });
 
  /*
@@ -89,14 +114,15 @@ router.post('/employee', function(req, res){
     if(err){
       //A
       console.log('数据库接入错误，错误代码A');
-      callback(err);
     } else {
       collection.find( query, options_e ).toArray(function(err, docs){
         if(docs){
-           callback(err, docs);
+           res.render("search/employee_result",{
+            title : "雇员搜索",
+            employees : docs, 
+           });
          }else{
            console.log("未找到相关雇员");
-           callback(err, null);
          }
       });
     }
@@ -108,6 +134,12 @@ router.post('/employee', function(req, res){
  * 参数：覆盖地区，涵盖服务，价格区间，经营时间，保障内容
  * 返回: 搜索结果
  */
+
+router.get('/company',function(req, res){
+  res.render("search/company",{
+    title : "中介搜索",
+  });
+});
 
 router.post('/company', function(req, res){
   //obj_c is company object
@@ -134,16 +166,18 @@ router.post('/company', function(req, res){
     if(err){
       //B
       console.log('数据库接入错误，错误代码B');
-      callback(err);
     } else {
       collection.find( obj_c, options_c ).toArray(function(err, docs){
         if(docs){
-          callback(err, docs);
+          res.render("search/company",{
+            title : "中介搜索",
+            companies : docs, 
+          }); 
         }else{
           console.log("未找到相关中介");
-          callback(err, null);
         }
       });
     }
   });
+
 });
