@@ -1,26 +1,103 @@
 extends ../layout
 
 block content
-  include menu
+  - var workTypes = ['钟点工', '宅速洁', '住家保姆', '育儿嫂', '护理', '早出晚归'];
+  - var areas = ['越秀', '荔湾', '海珠', '天河', '白云', '黄埔', '番禺', '花都'];
+  - var workContent0 = ['烧饭', '保洁', '洗衣熨烫'];
+  - var workContent1 = ['室内桌面', '台面', '厨房', '卫生间', '整理物品', '清除垃圾'];
+  - var workContent2 = ['照看小孩', '洗衣熨烫', '烧饭', '开车', '保洁'];
+  - var workContent3 = ['辅食制作', '宝宝带睡', '育儿服务', '一般服务', '烧饭'];
+  - var workContent4 = ['喂食喂药', '协助起居', '烧饭保洁', '污物处理', '洗澡擦身', '按摩推拿'];
+  - var workContent5 = ['保洁', '洗衣熨烫', '烧饭', '照顾老人', '护理病人', '照看小孩', '照顾婴儿'];
+  - var workContents = [workContent0, workContent1, workContent2, workContent3, workContent4, workContent5];
+  - var employeeInfo = ['birthday', 'isMarried', 'height', 'weight', 'certificates', 'languages', 'workExperience', 'cookingStyle', 'specialities']
+  - var infoChinese = ['生日', '婚姻状况', '身高', '体重', '证书', '语言', '资历', '做菜口味', '特长']
+  - var educations = ['小学', '初中', '高中', '大专', '本科', '其他'];
+  - var places = ['北京', '浙江', '天津', '安徽', '上海', '福建', '重庆', '江西', '山东', '河南', '湖北', '湖南', '广东', '海南', '山西', '青海', '江苏', '辽宁', '吉林', '台湾', '河北', '贵州', '四川', '云南', '陕西', '甘肃', '黑龙', '香港', '澳门', '广西', '宁夏', '西藏', '新疆', '内蒙古'];
+  // nativePlace
 
   form.ui.form#company-add-employee
     .grouped.inline.fields
-      - var employeeInfo = ['name', 'birthday', 'nativePlace', 'isMarried', 'education', 'height', 'weight', 'certificates', 'languages', 'workExperience', 'cookingStyle', 'specialities']
-      - var employeeWorkDetail = ['workType', 'workArea', 'workContent', 'salary', 'workTime', 'vacation']
+      .field
+        p 姓名: 
+        .ui.input
+          input.employee-info(type='text' name='name' value='')
+      .field
+        p 性别: 
+        .ui.selection.dropdown
+          input.employee-info(type='hidden' name='gender')
+          .text 女
+          i.dropdown.icon
+          .menu
+            .item(data-value='male') 男
+            .item.active(data-value='female') 女
+      .field
+        p 学历:
+        .ui.selection.dropdown
+          input.employee-info(type='hidden' name='education')
+          .text= educations[0]
+          i.dropdown.icon
+          .menu
+            .item.active(data-value=educations[0])= educations[0]
+            - for (var i = 1; i < educations.length; i++)
+              .item(data-value=educations[i])= educations[i]
+      .field
+        p 籍贯:
+        .ui.selection.dropdown
+          input.employee-info(type='hidden' name='nativePlace')
+          .text= places[0]
+          i.dropdown.icon
+          .menu
+            .item.active(data-value=places[0])= places[0]
+            - for (var i = 1; i < places.length; i++)
+              .item(data-value=places[i])= places[i]
 
       - for (var i = 0; i < employeeInfo.length; i++)
         .field
-          label #{employeeInfo[i]}
-          input.employee-info(type='text' name=employeeInfo[i] value='')
+          p= infoChinese[i] + ': '
+          .ui.input
+            input.employee-info(type='text' name=employeeInfo[i] value='')
+
 
       h3.ui.header 工作详情
-      - for (var i = 0; i < employeeWorkDetail.length; i++)
-        .field
-          label #{employeeWorkDetail[i]}
-          input.employee-work-detail(type='text' name=employeeWorkDetail[i] value='')
+        - each type, indexOfType in workTypes
+          .ui.accordion
+            .active.title
+              i.dropdown.icon
+              = type
+            .active.content
+                p 工作区域
+                .ui.relaxed.horizontal.list
+                  - each area in areas
+                   .item
+                     .ui.checkbox
+                       input(name='workArea'+indexOfType, value=area, type='checkbox')
+                       label= area
+                p 工作内容
+                .ui.relaxed.horizontal.list
+                  - each content in workContents[indexOfType]
+                    .item
+                      .ui.checkbox
+                        input(name='workContent'+indexOfType, value=content, type='checkbox')
+                        label= content
+                .grouped.inline.fields
+                  .inline.field
+                    p 工资: 
+                    .ui.input
+                      input(name='salary'+indexOfType, value='', type='text')
+                  .field
+                    p 工作时间: 
+                    .ui.input
+                      input(name='workTime'+indexOfType, value='', type='text')
+                  .field
+                    p 休假要求: 
+                    .ui.input
+                      input(name='vacation'+indexOfType, value='', type='text')
 
       h3.ui.header 保姆简介
       .field
         textarea.employee-info(name='description', rows='5', cols='48', value='')
 
       button.ui.blue.submit.button 添加
+
+

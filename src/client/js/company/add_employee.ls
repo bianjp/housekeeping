@@ -1,21 +1,14 @@
 $ !->
+  $ '.ui.accordion' .accordion()
+  $ '.ui.checkbox' .checkbox()
+  $ '.ui.selection.dropdown' .dropdown()
+  $ '.ui.radio.checkbox' .checkbox()
+
   $ 'form#company-add-employee' .on 'submit', (event)!->
     event.preventDefault!
-
-    employee = {}
-    workDetail = {}
-
-    $ '.employee-info' .each (index, element)!->
-      console.log $(this).attr('value')
-      employee[$(this).attr('name')] = $(this).attr('value')
-    $ '.employee-work-detail' .each (index, element)!->
-      workDetail[$(this).attr('name')] = $(this).attr('value')
-
-    employee[workDetail] =  workDetail
-
-    $.post '/company/employee/update', employee, (data) !->
+    $.post '/company/employee/update', $(this).serialize(), (data) !->
       if data.flag
-        $ '#page-content' .replaceWith '<h2>Update succeeded</h2>'
+        location.href = '/company/employees'
       else
         $ '#page-content' .replaceWith '<h2>' + data.message + '</h2>'
     , 'json'
