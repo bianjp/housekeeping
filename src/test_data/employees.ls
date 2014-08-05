@@ -11,9 +11,9 @@ specialities = ['开奶' '早产儿护理' '双胞胎护理' '多胞胎护理' '
 areas = ['天河区' '海珠区' '番禺区' '白云区' '越秀区']
 
 _.sampleArray = (list)->
-  count = _.random 1, list.length
+  count = _.random 0, list.length
   items = []
-  for i from 0 to count
+  for i from 0 to count-1
     items.push list[i]
   _.uniq items
 
@@ -21,7 +21,8 @@ createEmployee = ->
   employee =
     company: null
     name: _.sample names
-    birthday: new Date('1978-05-05')
+    gender: 'female'
+    birthday: new Date _.random(1965,1990), _.random(0, 11), _.random(0,30)
     nativePlace: _.sample provinces
     isMarried: _.sample [true false]
     education: _.sample educations

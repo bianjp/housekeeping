@@ -74,4 +74,4 @@ block content
               = '服务项目: '
               - each val in e['workDetail']
                 = val['workType'] + ' '
-          a.ui.teal.button.cardbars.check-employee(href='/employee/:id=' + e['_id']) 查看资料
+          a.ui.teal.button.cardbars.check-employee(href='/employee/' + e['_id']) 查看资料

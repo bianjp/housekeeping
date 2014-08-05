@@ -3,6 +3,7 @@
     _id: ObjectID,
     company: ObjectID,    //所属公司
     name: string,
+    gender: 'male'/'female',
     birthday: Date,
     nativePlace: string,  //籍贯
     isMarried: bool,      //是否已婚
@@ -16,7 +17,7 @@
     cookingStyle: [string,],  //做饭口味
     specialities: [string,],  //特长
     description: string,      //简介
-    
+
     workDetail: [{
       workType: string,       //工作类型(钟点工、保姆等)
       workArea: [string,],    //工作区域
