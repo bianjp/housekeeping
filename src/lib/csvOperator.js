@@ -163,7 +163,7 @@ function parseSet(data)
 /*
 (function()
 {
-  fs.readFile('../../public/lib/employeeData.csv' , {encoding: 'utf-8'} , function(err , data)
+  fs.readFile('../collections/employeeData.csv' , {encoding: 'utf-8'} , function(err , data)
   {
     if(err) throw err ;
     //console.log(data) ;
