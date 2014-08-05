@@ -21,7 +21,8 @@
       workType: string,       //工作类型(钟点工、保姆等)
       workArea: [string,],    //工作区域
       workContent: [string,], //工作内容
-      salary: string,   ·     //工资要求
+      lowsalary: int,   ·     //工资要求
+      upsalary: int,
       workTime: string,       //工作时间
       vacation: string        //休假要求
     },]
