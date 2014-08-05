@@ -2,6 +2,8 @@ var router  =  require('express').Router();
 
 var checkId = require('./checkIdentity') ;
 var User    =  require('../lib/user.js');
+var async = require('async');
+var db = require('../lib/db').getConnection();
 
 module.exports = router;
 
@@ -35,18 +37,39 @@ router.post('/login', function(req, res) {
     } else {
       delete user.password;
       req.session.user = user;
-      res.send({
-        flag : true
-      });
+      if (user.role == 'company'){
+        async.waterfall([
+          function(callback){
+            db.collection('companies', callback);
+          },
+
+          function(col, callback){
+            col.findOne({userId: user._id}, callback);
+          }
+        ],
+
+        function(err, item){
+          if (item){
+            req.session.user.companyId = item._id;
+          }
+          res.send({
+            flag: true
+          });
+          console.log(req.session);
+        });
+      }
+      else {
+        res.send({
+          flag : true
+        });
+      }
     };
   });
 });
 
 //登出界面
 router.get('/logout', function(req, res) {
-  req.session.user = null;
-  res.send({
-    flag : true
+  req.session.destroy(function(err){
+    res.redirect('/')
   });
-  return(res.redirect('/'));
 });
