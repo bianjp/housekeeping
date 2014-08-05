@@ -27,6 +27,27 @@ router.get('/',function(req, res){
   });
 });
 
+function findcompany(docs){
+  db.collection('companies', function(err, collection){
+    if (err){
+      console.log('数据库接入错误，从employee到company');
+    } else {
+      ids = docs.map(function(item){
+        return item.company;
+      });
+      collection.find({_id : {$in : ids}}, {fields: {logo:1, name:1}}).toArray(function(err, temp_docs){
+        var temp;
+        for(var i = 0; com_docs.length; i++){
+          temp[temp_docs[i]._id] = temp_docs[i];
+        }
+        for(var j = 0; docs.length; j++){
+          docs[j]["company_property"] = temp[docs[j].company];
+        }
+      });
+    }
+  });
+}
+
 router.get('/employee', function(req, res){
   //obj_e is employee object
   var obj_e = {
@@ -52,6 +73,7 @@ router.get('/employee', function(req, res){
     } else {
       collection.find( query, options_e ).toArray(function(err, docs){
         if(docs){
+          findcompany(docs);
           res.render("search/employee_result",{
             title : "雇员搜索",
             employees : docs, 
@@ -73,7 +95,7 @@ router.get('/employee', function(req, res){
 router.post('/employee', function(req, res){
   //query is the full.
   //年龄信息
-  var stryear = req.query.age.split('-');
+  var stryear = req.body.age.split('-');
   var lyear = parseInt(stryear[0]);
   var uyear = parseInt(stryear[1]);
   var date1 = new Date();
@@ -83,13 +105,13 @@ router.post('/employee', function(req, res){
   query["birthday"] = {$gte : date3, $lte : date2};
 
   //资历
-  var strexp = req.query.workExperience.split('-');
+  var strexp = req.body.workExperience.split('-');
   var lexp = parseInt(strexp[0]);
   var uexp = parseInt(strexp[1]);
   query["workExperience"] = {$gte : lexp, $lte : uexp};
 
   //薪酬
-  var strsal = req.query.salary.split('-');
+  var strsal = req.body.salary.split('-');
   var lsal = parseInt(strsal[0]);
   var usal = parseInt(strsal[1]);
   query['$or'] = [
@@ -97,10 +119,10 @@ router.post('/employee', function(req, res){
                   {lowsalary :{$gte : lsal, $lte : usal}}
                ];
   //语言
-  query["languages"] = {$in : req.query.languages};
+  query["languages"] = {$in : req.body.languages};
 
   //保障内容
-  query["guarantees"] = {$in : req.query.guarantees};
+  query["guarantees"] = {$in : req.body.guarantees};
 
   //附加选项
   var options_e = {
@@ -117,6 +139,7 @@ router.post('/employee', function(req, res){
     } else {
       collection.find( query, options_e ).toArray(function(err, docs){
         if(docs){
+           findcompany(docs);
            res.render("search/employee_result",{
             title : "雇员搜索",
             employees : docs, 
@@ -143,14 +166,14 @@ router.get('/company',function(req, res){
 
 router.post('/company', function(req, res){
   //obj_c is company object
-  var date  = req.query.year.split('-');
+  var date  = req.body.year.split('-');
   var date1 = new Date ();
   var date2 = new Date (date1.getTime() - parseInt(date[0])*365*24*60*60*1000);
   var date3 = new Date (date1.getTime() - parseInt(date[1])*365*24*60*60*1000);
   var obj_c = {
-    "serviceRegions.regions"  :   {$in  : req.query.serviceRegions.regions},  //覆盖地区
-    "businessScope"           :   {$in  : req.query.businessScope},   //涵盖服务
-    "guarantees"              :   {$all : req.query.guarantees},      //保障内容
+    "serviceRegions.regions"  :   {$in  : req.body.serviceRegions.regions},  //覆盖地区
+    "businessScope"           :   {$in  : req.body.businessScope},   //涵盖服务
+    "guarantees"              :   {$all : req.body.guarantees},      //保障内容
     "registeredAt"            :   {$gte : date3, $lte : date2}      //经营时间
     //价格区间
   };
@@ -169,10 +192,10 @@ router.post('/company', function(req, res){
     } else {
       collection.find( obj_c, options_c ).toArray(function(err, docs){
         if(docs){
-          res.render("search/company",{
-            title : "中介搜索",
-            companies : docs, 
-          }); 
+          res.send({
+            flag : true,
+            companies : docs,
+          });
         }else{
           console.log("未找到相关中介");
         }
