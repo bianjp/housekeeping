@@ -1,9 +1,6 @@
-extends ../layout
+extends layout
 
 block content
-  .ui.menu.two.green.inverted
-    a.active.item(href='/company') 公司资料
-    a.item(href='/company/employees') 雇员
 
   #company-header
     .ui.left.floated.image#company-logo
@@ -58,3 +55,23 @@ block content
           p= company.contacts.contact
     h3.ui.header 公司简介
     .container!= company.about
+
+  #employees-cards-list
+    h3.ui.header 该公司有#{company['employeeCount']}个雇员
+    .ui.very.relaxed.horizontal.list
+      - each e in employees
+        .item
+          #employee-card
+            .ui.left.floated.image#employee-photo
+              img(src= e['photo'])
+            #info
+              = '姓名: ' + e['name']
+              br
+              = '年龄: ' + ( (new Date().getFullYear() ) - e['birthday'].getFullYear())
+              br
+              = '资历: ' + e['workExperience']
+              br
+              = '服务项目: '
+              - each val in e['workDetail']
+                = val['workType'] + ' '
+          a.ui.teal.button.cardbars.check-employee(href='/employee/:id=' + e['_id']) 查看资料

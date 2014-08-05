@@ -1,12 +1,10 @@
 .sass-cache/
-bin/config/
-bin/lib/
-bin/routes/
+bin/
 node_modules/
 public/javascripts/
 public/stylesheets/
 public/images/logos/
-puglic/images/photos/
+public/images/photos/
 app.js
 
 # Temporary files

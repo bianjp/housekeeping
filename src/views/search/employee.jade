@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  include search_bar
+  include mixins
+
+  - type = parseInt(type)
+
+  +workType(type)
+
+  form#search-employee-options(action='/search/employee', method='get')
+    input(type='hidden', name='type', value=type)
+
+    - var areas = ['番禺区', '海珠区', '天河区', '花都区', '白云区']
+    +workArea(areas)
+
+    if type != 1
+      +workContent(type)
+
+    .ui.three.column.grid
+      .ui.column
+      .ui.column
+        button.ui.blue.fluid.button 搜索
+      .ui.column

@@ -1,0 +1,66 @@
+extends ../layout
+
+block content
+  include search_bar
+
+  .form#search-company
+    .ui.action.input
+      input(type='text', value=name, placeholder='搜索中介公司')
+      .ui.button.submit
+        i.search.icon
+
+  .ui.segment#search-options
+    .ui.list
+      .item(data-option='serviceRegions')
+        .ui.blue.horizontal.label 服务区域
+        a.ui.label 番禺区
+        a.ui.label 海珠区
+        a.ui.label 天河区
+        a.ui.label 花都区
+        a.ui.label 白云区
+      .item(data-option='year')
+        .ui.blue.horizontal.label 经营时间
+        a.ui.label(data-value='1-3') 1-3
+        a.ui.label(data-value='4-6') 4-6
+        a.ui.label(data-value='7-10') 7-10
+        a.ui.label(data-value='10-100') 10年以上
+      .item(data-option='businessScope')
+        .ui.blue.horizontal.label 服务类型
+        a.ui.label 钟点工
+        a.ui.label 宅速洁
+        a.ui.label 保姆
+        a.ui.label 育儿嫂
+        a.ui.label 护理
+        a.ui.label 早出晚归
+      .item(data-option='guarantees')
+        .ui.blue.horizontal.label 提供保障
+        a.ui.label 实名赔付
+        a.ui.label 准时达
+        a.ui.label 30天换人
+
+  .ui.info.message 共有
+    span#result-count= companies.length
+    | 个公司符合搜索条件
+
+  .ui.horizontal.list.segment#search-company-result
+    each company in companies
+      .item
+        img.ui.left.floated.image(src=company.logo)
+        .content
+          .ui.header= company.name
+          div
+            span 服务类型
+            div= company.businessScope.join(', ')
+          div
+            span 服务区域
+            div= company.serviceRegions[0].regions.join(', ')
+          div
+            span 雇员数量
+            div= company.employeeCount
+          div
+            span 地址
+            div= company.contacts.address
+          div
+            span 联系方式
+            div= company.contacts.fixedPhone
+        a.ui.fluid.blue.button(href='/company/' + company._id) 查看

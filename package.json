@@ -15,7 +15,8 @@
     "express-session-mongo": "https://github.com/weisjohn/express-session-mongo/archive/feature_express4.tar.gz",
     "jade": "~1.3.0",
     "mongodb": "^1.4.7",
-    "morgan": "~1.0.0"
+    "morgan": "~1.0.0",
+    "underscore": "^1.6.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

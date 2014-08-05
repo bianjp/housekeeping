@@ -1,0 +1,98 @@
+extends ../layout
+
+block content
+  include mixins
+
+  - type = parseInt(type)
+
+  +workType(type)
+
+  .ui.segment#filter-employee-options
+    .ui.list
+      .item(data-option='age')
+        .ui.blue.horizontal.label 年龄范围
+        a.ui.label(data-value='') 不限
+        a.ui.label(data-value='0-30') 30岁以下
+        a.ui.label(data-value='31-35') 30-35岁
+        a.ui.label(data-value='36-40') 35-40岁
+        a.ui.label(data-value='41-45') 40-45岁
+        a.ui.label(data-value='45-80') 45岁以上
+      .item(data-option='workExperience')
+        .ui.blue.horizontal.label 工作经验
+        a.ui.label(data-value='') 不限
+        a.ui.label(data-value='1-2') 1-2年
+        a.ui.label(data-value='2-3') 2-3年
+        a.ui.label(data-value='3-4') 3-4年
+        a.ui.label(data-value='4-5') 4-5年
+        a.ui.label(data-value='5-20') 5年以上
+      .item(data-option='education')
+        .ui.blue.horizontal.label 学历
+        a.ui.label(data-value='') 不限
+        a.ui.label 小学
+        a.ui.label 初中
+        a.ui.label 高中
+        a.ui.label 大专
+        a.ui.label 本科
+        a.ui.label 其它
+      .item(data-option='salary')
+        .ui.blue.horizontal.label 薪资范围
+        a.ui.label(data-value='') 不限
+        a.ui.label(data-value='0-30') 30元/小时以下
+        a.ui.label(data-value='30-35') 30-35元/小时
+        a.ui.label(data-value='35-40') 35-40元/小时
+        a.ui.label(data-value='40-100') 40元/小时以上
+      .item(data-option='languages')
+        .ui.blue.horizontal.label 擅长语言
+        a.ui.label(data-value='') 不限
+        a.ui.label 普通话
+        a.ui.label 上海话
+        a.ui.label 粤语
+        a.ui.label 英语
+        a.ui.label 日语
+        a.ui.label 客家话
+        a.ui.label 潮汕话
+        a.ui.label 其它
+      .item(data-option='guarantees')
+        .ui.blue.horizontal.label 提供保障
+        a.ui.label 不限
+        a.ui.label 快速响应
+        a.ui.label 准时达
+        a.ui.label 30日换人
+
+  .ui.info.message 符合条件的共有
+    span#result-count= 5
+    | 人
+
+  .ui.blue.label 排序
+  .ui.small.buttons#sort-options
+    .ui.button(data-value='popular') 人气
+    .ui.button(data-value='age') 年龄
+    .ui.button(data-value='workExperience') 工作经验
+    .ui.button(data-value='salary') 薪资
+
+  .ui.segment#search-result
+    .ui.list
+      each employee in employees
+        .item
+          img.ui.left.floated.image(src=employee.photo)
+          .content
+            .ui.header= employee.name
+            div
+              span 年龄：
+              div= employee.birthday
+            div
+              span 工作经验：
+              div= employee.workExperience
+            div
+              span 薪资：
+              div= employee.workDetail.salary
+            div
+              span 学历：
+              div= employee.education
+
+          .right.floated.aligned.company
+            a.ui.header(href='/company/' + employee.companyId) 汇爱家政
+            a(href='/company/' + employee.companyId)
+              img.ui.image(src=employee.companyLogo)
+
+          a.ui.fluid.blue.button(href='/employee/' + employee._id) 查看

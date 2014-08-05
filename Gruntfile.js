@@ -20,20 +20,36 @@ module.exports = function(grunt) {
         cwd: 'src/lib',
         src: '**/*.js',
         dest: 'bin/lib'
+      },
+      test: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/test_data/logos',
+            src: '*',
+            dest: 'public/images/logos'
+          },
+          {
+            expand: true,
+            cwd: 'src/test_data/photos',
+            src: '*',
+            dest: 'public/images/photos'
+          }
+        ]
       }
     },
 
     livescript: {
       server: {
         files: [
-          { 
+          {
             expand: true,
             cwd: '.',
             src: 'app.ls',
             dest: '.',
             ext: '.js'
           },
-          { 
+          {
             expand: true,
             cwd: 'src/config',
             src: '*.ls',
@@ -54,6 +70,18 @@ module.exports = function(grunt) {
             dest: 'bin/routes',
             ext: '.js'
           }
+        ]
+      },
+
+      test: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/test_data',
+            src: '*.ls',
+            dest: 'bin/test_data',
+            ext: '.js'
+          },
         ]
       },
 
@@ -98,12 +126,25 @@ module.exports = function(grunt) {
         spawn: false
       },
 
+      jade: {
+        options: {
+          livereload: true
+        },
+        files: ['src/views/**/*.jade']
+      },
+
       stylesheets: {
+        options: {
+          livereload: true
+        },
         files: ['src/client/css/**/*.scss'],
         tasks: ['clean:css', 'compass', 'concat:css']
       },
 
       javascripts_client: {
+        options: {
+          livereload: true
+        },
         files: ['src/client/js/**/*.ls'],
         tasks: ['clean:js_client', 'livescript:client']
       },
@@ -128,7 +169,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-contrib-watch');
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
   // Define tasks
   grunt.registerTask('default', ['clean', 'livescript', 'copy', 'compass', 'concat', 'express', 'watch']);
   grunt.registerTask('build', ['clean', 'livescript', 'copy', 'compass', 'concat']);
@@ -144,8 +185,20 @@ module.exports = function(grunt) {
           done();
         });
       });
-    })
+    });
   });
 
   grunt.registerTask('reset', ['build', 'resetDatabase']);
+
+  grunt.registerTask('test', 'Insert test data...', function(){
+    var db = require('./bin/lib/db');
+    var done = this.async();
+
+    db.connect(function(err){
+      var test_data = require('./bin/test_data/insert');
+      test_data.insert(function(err){
+        done(!err);
+      });
+    });
+  });
 };
