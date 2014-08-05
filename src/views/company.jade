@@ -58,7 +58,7 @@ block content
 
   #employees-cards-list
     h3.ui.header 该公司有#{company['employeeCount']}个雇员
-    .ui.horizontal.list
+    .ui.very.relaxed.horizontal.list
       - each e in employees
         .item
           #employee-card
@@ -74,4 +74,4 @@ block content
               = '服务项目: '
               - each val in e['workDetail']
                 = val['workType'] + ' '
-          a.ui.teal.button#check-bar(href='/employee/:id=' + e['_id']) 查看
+          a.ui.teal.button.cardbars.check-employee(href='/employee/:id=' + e['_id']) 查看资料

@@ -3,12 +3,13 @@ router = require 'express' .Router!
 router.get '/', (req, res)!->
   res.render 'index', do
     title: '首页'
-
+/*
 router.get '/employee/:id', (req, res) !->
   contacts =
     fixedPhone: '020-12345678'
     mobilePhone: '020-12345678'
   company =
+    _id: 0
     name: '景辉家政'
     contacts: contacts
 
@@ -79,6 +80,7 @@ router.get '/company/:id', (req, res) !->
     address: 'address of the company'
     contact: '赢家政'
   company =
+    _id: 0
     name: '景辉家政'
     logo: '/images/photos/01.jpg'
     registeredAt: somedate
@@ -160,5 +162,5 @@ router.get '/company/:id', (req, res) !->
     employees: employees
     company: company
     title: company.name
-
+*/
 module.exports = router

@@ -15,7 +15,8 @@ block content
           .ui.orange.label= val
     #employee-header-info
       h1= employee['name']
-      h2= company['name']
+      a(href='/company/:id=' + company['_id'])
+        .ui.blue.button= company['name']
       p= company['contacts']['fixedPhone'] + ' ' +  company['contacts']['mobilePhone']
 
   .ui.vertical.segment#employee-info

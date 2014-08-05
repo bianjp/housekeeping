@@ -1,17 +1,24 @@
 extends ../layout
 
 block content
-  include menu
+  .ui.menu.two.green.inverted
+    a.active.item(href='/company') 公司资料
+    a.item(href='/company/employees') 雇员
+
+  #company-header
+    .ui.left.floated.image#company-logo
+      img(src= company['logo'])
+    .ui.list#company-guarantees
+      - each val in company['guarantees']
+        .item
+          .ui.orange.label= val
+    #employee-header-info
+      h1= company['name']
 
   .main.container#company-info
-    a.ui.right.floated.teal.small.button(href='/company/update') 更改资料
-    img.ui.small.image#logo(src=company.logo)
-
     .ui.form
       .grouped.inline.fields
-        .field
-          label 公司名称
-          p= company.name
+        h3.ui.header 基本信息
         .field
           label 注册时间
           p= formatDate(company.registeredAt)
