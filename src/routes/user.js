@@ -1,7 +1,9 @@
 var router  =  require('express').Router();
 
 var checkId = require('./checkIdentity') ;
+var rF = require('./respondForm') ;
 var User    =  require('../lib/user.js');
+
 
 module.exports = router;
 
@@ -45,10 +47,13 @@ router.post('/login', function(req, res) {
 //登出界面
 router.get('/logout', function(req, res) {
   req.session.user = null;
+  /*
   res.send({
     flag : true
   });
-  res.redirect('/') ;
+  */
+  //res.redirect('/') ;
+  rF.respondRedirect(res , '/') ;
 });
 
 //用户个人界面

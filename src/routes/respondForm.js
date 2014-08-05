@@ -15,3 +15,9 @@ exports.respondPost = function(res , jsonObj , err)
   res.send(jsonObj) ;
   return ;
 } ;
+
+exports.respondRedirect = function(res , template)
+{
+  res.redirect(template) ;
+  return ;
+}
