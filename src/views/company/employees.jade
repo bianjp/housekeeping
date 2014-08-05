@@ -1,8 +1,39 @@
 extends ../layout
 
 block content
-  include menu
+  .ui.menu.two.green.inverted
+    a.item(href='/company') 公司资料
+    a.active.item(href='/company/employees') 雇员
 
+  #employees-cards-list
+    h3.ui.header 共有#{company['employeeCount']}个雇员
+    .ui.very.relaxed.horizontal.list
+      .item
+        .ui.segment
+          a.ui.teal.cardbars.add-employee.button(href="/company/employee/add") 添加雇员
+      .item
+        .ui.segment
+          a.ui.teal.cardbars.add-employee.button(href="/company/employee/batch") 批量导入
+      - each e in employees
+        .item
+          .ui.segment
+            #employee-card
+              .ui.left.floated.image#employee-photo
+                img(src= e['photo'])
+              #info
+                = '姓名: ' + e['name']
+                br
+                = '年龄: ' + ( (new Date().getFullYear() ) - e['birthday'].getFullYear())
+                br
+                = '资历: ' + e['workExperience']
+                br
+                = '服务项目: '
+                - each val in e['workDetail']
+                  = val['workType'] + ' '
+            a.ui.blue.button.cardbars.update-employee(href='/company/employee/update?id=' + e['_id']) 编辑资料
+            br
+            .ui.red.button.cardbars.delete-employee(href='/company/employee/delete/:id=' + e['_id']) 删除该雇员
+//
   #add-employee-button
     a.massive.ui.button(href='/company/employee/add') add-employee-button
   #employees-list

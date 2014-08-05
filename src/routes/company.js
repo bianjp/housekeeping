@@ -27,9 +27,31 @@ function check_login(req, res, next) {
 router.use('/', check_login); //检查session
 
 router.get('/', function(req, res){
-  res.render('company',{
-    title:'中介公司管理页面',
-    company: comdoc,
+  var company = {
+    name: '汇爱家政',
+    logo: '/images/logos/logo.jpg',
+    businessScope: ['保姆', '月嫂', '老人陪护', '钟点工'],
+    serviceRegions: [
+      {
+        city: '广州',
+        regions: ['海珠区', '天河区']
+      }
+    ],
+    guarantees: ['准时达', '不满意退货'],
+    about: '<p>广州蓓爱教育信息咨询有限公司（品牌：汇爱）是一家专业从事家庭服务的大型品牌企业，成立于2009年9月，是广州家庭服务业协会副会长单位，国家家政服务工程支持单位。随着公司不断发展，公司目前在广州开设7个分中心：广州天河中心、广州海珠中心、广州越秀中心、广州番禺中心，广州天河珠江新城中心、广州荔湾中心、佛山服务中心。<p>\
+    <p>汇爱结合国内的家庭服务的实际状况及市场需要，打造出汇爱家政服务、汇爱家庭早教、汇爱月子护理等品牌项目。汇爱家庭服务，汇聚爱的力量为家庭服务，不仅要扎实为家庭服务，更要帮助更多的人成功，成为行业的先驱，汇爱家庭服务要做全国行业的表率，汇爱家庭服务要把完整的服务普及家庭。愿我们共同合作，让每个家庭、每个孩子受益！</p>',
+    contacts: {
+      website: 'http://aijia.com',
+      email: 'huiai@gmail.com',
+      fixedPhone: '020-22233344',
+      mobilePhone: '1380000000',
+      address: '广州市海珠区财智大厦616',
+      contact: '张三'
+    }
+  };
+  res.render('company/index',{
+    title: company.name,
+    company: company
   });
 });
 
@@ -67,8 +89,8 @@ router.get('/update', function(req, res){
  * 参数：公司ID
  * 返回：雇员数组
  */
+/*
 router.get('/employees', function(req, res){
-  /*
   Employee.get(req.body.company, function(err, docs){
     if(!docs){
       res.send({
@@ -82,20 +104,85 @@ router.get('/employees', function(req, res){
       });
     }
   });
-  */
 
-  var employees = [];
-  var i;
-  for (i = 0; i < 100; i++) {
-    employees[i] = {
-      _id: i,
-      name: 'Employee ' + i
-    }
-  }
+});
+*/
+router.get('/employees', function(req, res){
+  var somedate, contacts, company, employee, employees;
+    somedate = new Date;
+      somedate.setFullYear(1970);
+  contacts = {
+      website: 'http://local:3000',
+          email: 'housekeeping@house.com',
+              fixedPhone: '020-12345678',
+                  mobilePhone: '020-12345678',
+                      QQ: '1234567890',
+      address: 'address of the company',
+      contact: '赢家政'
+    };
+  company = {
+      _id: 0,
+          name: '景辉家政',
+              logo: '/images/photos/01.jpg',
+                  registeredAt: somedate,
+                      businessScope: ['钟点工', '护理'],
+      serviceRegions: [
+            {
+              city: '广州',
+              regions: ['天河', '番禺']
+            }, {
+                    city: '北京',
+                    regions: ['东城', '西城']
+                  }
+          ],
+      guarantees: ['准时达', '不满意退货'],
+      about: '这是公司的简介',
+      contacts: contacts,
+      employeeCount: 4
+    };
+  employee = {
+      _id: 0,
+      companyName: '景辉家政',
+      name: '郭文芳',
+      birthday: somedate,
+      gender: 'female',
+      isMarried: true,
+      nativePlace: '广东',
+      education: '高中',
+      photo: '/images/photos/01.jpg',
+      height: '160cm',
+      weight: '50kg',
+      certificates: ['公司认证', '个人认证'],
+      languages: ['普通话', '粤语'],
+      workExperience: '6年',
+      cookingStyle: ['粤菜', '川菜'],
+      specialities: ['做饭', '带小孩'],
+      description: '这是保姆的描述',
+      workDetail: [
+        {
+                workType: '住家de保姆',
+                workArea: ['天河', '番禺'],
+              workContent: ['煮饭', '买菜'],
+              salary: '4500/月',
+                workTime: '周一到周五',
+                        vacation: '周日'
+                      }, {
+                              workType: '钟点工',
+                              workArea: ['天河', '番禺'],
+                              workContent: ['清洁'],
+                              salary: '35/小时',
+                              workTime: '周一到周五',
+                              vacation: ''
+                            }
+      ]
+    };
+  employees = [employee, employee, employee, employee];
   res.render('company/employees', {
-    title:'Employees',
-    employees : employees
-  });
+      employee: employee,
+          employees: employees,
+              company: company,
+                  title: company.name
+                    });
 });
 
 /*
