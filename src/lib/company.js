@@ -7,7 +7,8 @@ var operation =
     function(collection , company , callback) {return(collection.insert(company , callback)) ;} ,
     function(collection , company , callback) {return(collection.findOne(company , callback)) ;} ,
     function(collection , company , callback) {return(collection.find(company).toArray(callback)) ;} ,
-    function(collection , company , callback) {return(collection.remove(company , callback)) ;}
+    function(collection , company , callback) {return(collection.remove(company , callback)) ;} ,
+    function(collection , company , update , callback) {return(collection.update(company , {$set : update} , callback)) ;}
   ] ;
 
 //构造函数
@@ -79,7 +80,7 @@ Company.update = function(company , update , callback)
   return(db.getConnection().collection('companies', function(err, collection)
     {
     if (err) {callback(err) ; return ;}
-    collection.update(company , {$set : update} , callback) ;    //暂无索引
+    operation[4](collection , company , update , callback) ;
     })) ;
   } ;
 

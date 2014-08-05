@@ -161,7 +161,7 @@ router.post('/employee', function(req, res){
   //"skip" : 10,
     "sort" : [['workDetail.salary', 'asc'], ['name', 'asc']]
   };
-console.log(query);
+
   getEmployees(query, options, function(err, docs){
     res.send({
       flag: !err,

@@ -5,6 +5,7 @@ var User    =  require('../lib/user.js');
 var async = require('async');
 var db = require('../lib/db').getConnection();
 
+
 module.exports = router;
 
 //判定是否未登录
@@ -15,7 +16,7 @@ router.all('/logout', checkId.checkLogin) ;
 //登录界面
 router.get('/login', function(req, res){
   res.render('login', {
-    title:'用户登录',
+    title:'登录'
   });
 });
 
@@ -55,7 +56,6 @@ router.post('/login', function(req, res) {
           res.send({
             flag: true
           });
-          console.log(req.session);
         });
       }
       else {
