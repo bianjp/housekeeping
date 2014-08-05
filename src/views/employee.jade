@@ -15,7 +15,7 @@ block content
           .ui.orange.label= val
     #employee-header-info
       h1= employee['name']
-      a(href='/company/:id=' + company['_id'])
+      a(href='/company/' + company['_id'])
         .ui.blue.button= company['name']
       p= company['contacts']['fixedPhone'] + ' ' +  company['contacts']['mobilePhone']
 
@@ -24,25 +24,25 @@ block content
     .ui.very.relaxed.horizontal.list
       .item
         .content
-          - if (employee['gender'] === 'female')
+          if (employee['gender'] === 'female')
             | 性别：女
-          - else
+          else
             | 性别: 男
       .item
         .content= '年龄: ' + ( (new Date().getFullYear() ) - employee['birthday'].getFullYear())
       .item
         .content
-          - if (employee['isMarried'])
+          if (employee['isMarried'])
             | 婚姻状况：已婚
-          - else
+          else
             | 婚姻状况：未婚
         .content
-      - each val, index in info
+      each val, index in info
         .item
           .content
             = infoChinese[index] + ': ' + employee[val]
 
-    - each work in employee['workDetail']
+    each work in employee['workDetail']
       h3.ui.header= work['workType']
       .ui.list
         - each detail, index in workDetail
@@ -51,16 +51,16 @@ block content
 
     h3.ui.header 保姆特色
     .ui.list
-      - if (employee['cookingStyle'].length > 0)
+      if (employee['cookingStyle'].length > 0)
         .item
-          | 烹饪: 
+          | 烹饪:
           .ui.horizontal.bulleted.list
             - each val in employee['cookingStyle']
               .item
                 = val
-      - if (employee['specialities'].length > 0)
+      if (employee['specialities'].length > 0)
         .item
-          | 特长: 
+          | 特长:
           .ui.horizontal.bulleted.list
             - each val in employee['specialities']
               .item

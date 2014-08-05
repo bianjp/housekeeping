@@ -6,8 +6,10 @@ var Company   = require('../lib/company.js');
 module.exports = router;
 
 function check_login(req, res, next) {
-  if(!req.session.user){
-    console.log("未登录");
+  if (/[^\/]{24}/.test(req.path)){  //homepage of company
+    next();
+  }
+  else if(!req.session.user){
     if (req.xhr) {
       // 是AJAX请求
       res.send({
