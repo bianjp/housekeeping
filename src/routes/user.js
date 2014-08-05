@@ -48,5 +48,10 @@ router.get('/logout', function(req, res) {
   res.send({
     flag : true
   });
-  return(res.redirect('/'));
+  res.redirect('/') ;
+});
+
+//用户个人界面
+router.get('/profile', function(req, res) {
+  res.send("用户个人界面") ;
 });
