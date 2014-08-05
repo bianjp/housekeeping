@@ -21,7 +21,7 @@ app.use session do
   saveUninitialized: false
   resave: false
   cookie:
-    maxAge: 604800  # One week
+    maxAge: 604800000  # One week. It's milliseconds.
   store: new MongoStore do
     db: config.database.name
     ip: config.database.host
