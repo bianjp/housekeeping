@@ -71,7 +71,7 @@ router.get('/employee', function(req, res){
       //C
       console.log('数据库接入错误，错误代码C');
     } else {
-      collection.find( query, options_e ).toArray(function(err, docs){
+      collection.find( obj_e, options_e ).toArray(function(err, docs){
         if(docs){
           findcompany(docs);
           res.render("search/employee_result",{
