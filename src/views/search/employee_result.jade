@@ -60,7 +60,7 @@ block content
         a.ui.label 30日换人
 
   .ui.info.message 符合条件的共有
-    span#result-count= 5
+    span#result-count= employees.length
     | 人
 
   .ui.blue.label 排序
@@ -91,8 +91,8 @@ block content
               div= employee.education
 
           .right.floated.aligned.company
-            a.ui.header(href='/company/' + employee.companyId) 汇爱家政
-            a(href='/company/' + employee.companyId)
-              img.ui.image(src=employee.companyLogo)
+            a.ui.header(href='/company/' + employee.company)= employee.company_property.name
+            a(href='/company/' + employee.company)
+              img.ui.image(src=employee.company_property.logo)
 
           a.ui.fluid.blue.button(href='/employee/' + employee._id) 查看
