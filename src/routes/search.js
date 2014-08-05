@@ -79,6 +79,9 @@ router.post('/employee', function(req, res){
 
   //附加选项
   var options_e = {
+  //分页选项
+  //"limit": 20,
+  //"skip" : 10,
     "sort" : [['workDetail.salary', 'asc'], ['name', 'asc']]
   };
 
@@ -121,6 +124,9 @@ router.post('/company', function(req, res){
   };
   //附加选项
   var options_c = {
+  //分页选项
+  //"limit": 20,
+  //"skip" : 10,
     "sort" : [['registeredAt', 'desc'], ['name', 'asc']]
   };
   
