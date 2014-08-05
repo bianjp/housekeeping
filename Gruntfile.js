@@ -20,6 +20,22 @@ module.exports = function(grunt) {
         cwd: 'src/lib',
         src: '**/*.js',
         dest: 'bin/lib'
+      },
+      test: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/test_data/logos',
+            src: '*',
+            dest: 'public/images/logos'
+          },
+          {
+            expand: true,
+            cwd: 'src/test_data/photos',
+            src: '*',
+            dest: 'public/images/photos'
+          }
+        ]
       }
     },
 
@@ -54,6 +70,18 @@ module.exports = function(grunt) {
             dest: 'bin/routes',
             ext: '.js'
           }
+        ]
+      },
+
+      test: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/test_data',
+            src: '*.ls',
+            dest: 'bin/test_data',
+            ext: '.js'
+          },
         ]
       },
 
@@ -157,8 +185,20 @@ module.exports = function(grunt) {
           done();
         });
       });
-    })
+    });
   });
 
   grunt.registerTask('reset', ['build', 'resetDatabase']);
+
+  grunt.registerTask('test', 'Insert test data...', function(){
+    var db = require('./bin/lib/db');
+    var done = this.async();
+
+    db.connect(function(err){
+      var test_data = require('./bin/test_data/insert');
+      test_data.insert(function(err){
+        done(!err);
+      });
+    });
+  });
 };
