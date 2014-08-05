@@ -1,7 +1,7 @@
 module.exports = [
   userId: null
   name: '广州千样好家庭服务有限公司'
-  logo: '/images/logos/'
+  logo: '/images/logos/千样好.jpg'
   registeredAt: new Date('2000-10-21')
   businessScope: ['保姆' '钟点工' '宅速洁' '护理' '早出晚归']
   serviceRegions: [
@@ -16,7 +16,7 @@ module.exports = [
     fixedPhone: '020-87599699'
     mobilePhone: '18620249221'
     QQ: '1521301075'
-    address: '广州市天河区中山大道西140号华港商务大厦1802室（BRT华景新城站旁）'
+    address: '天河区中山大道西140号华港商务大厦1802室'
     contact: '林老师'
   employeeCount: 10
 ,
@@ -37,7 +37,7 @@ module.exports = [
     fixedPhone: '020-87599699'
     mobilePhone: '18620249221'
     QQ: '1521301075'
-    address: '广州市天河区中山大道西140号华港商务大厦1802室（BRT华景新城站旁）'
+    address: '中山大道西140号华港商务大厦'
     contact: '林老师'
   employeeCount: 10
 ,

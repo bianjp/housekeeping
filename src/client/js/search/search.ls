@@ -1,29 +1,66 @@
 $ !->
   if location.pathname == '/search/company'
-    getSearchOptions = !->
+    getSearchOptions = ->
       options = {}
       $ '#search-options .item' .each !->
         option = $ this .attr 'data-option'
         values = []
-        $ this .find '.blue.label' .each !->
+        $ this .find 'a.blue.label' .each !->
           values.push $(this).attr('data-value') || $(this).text!
         if values.length
-          options[option] = values
+          if option == 'year'
+            options[option] = values[0]
+          else
+            options[option] = values
       options
 
     search = !->
-      searchOptions = getSearchOptions!
-      if $ '#search-company' .length
-        keyword = $ '#search-company input' .val!
-        if keyword
-          options.keyword = keyword
-      $ '.post' '/search/company', options, (data)!->
+      options = getSearchOptions!
+      keyword = $ '#search-company input' .val!
+      if keyword
+        options.name = keyword
+      console.log options
+      $ '#result-count' .text ''
+      $ '#search-company-result' .empty!
+      $.post '/search/company', options, (data)!->
         if data.flag
           console.log data
+          html = [
+            '<div class="item"><img class="ui left floated image" src="'
+            '' # logo
+            '"><div class="content"><div class="ui header">'
+            '' # name
+            '</div><div><span>服务类型</span><div>'
+            '' # business scopes
+            '</div></div><div><span>服务区域</span><div>'
+            '' # areas
+            '</div></div><div><span>雇员数量</span><div>'
+            '' # employee count
+            '</div></div><div><span>地址</span><div>'
+            '' # address
+            '</div></div><div><span>联系方式</span><div>'
+            '' # phones
+            '</div></div></div><a class="ui fluid blue button" href="/company/'
+            '' # id
+            '">查看</a></div>'
+          ]
+          $ '#result-count' .text data.companies.length
+          container = $ '#search-company-result'
+          for company in data.companies
+            html[1] = company.logo
+            html[3] = company.name
+            html[5] = company.businessScope.join ', '
+            html[7] = company.serviceRegions[0].regions.join ', '
+            html[9] = company.employeeCount
+            html[11] = company.contacts.address
+            html[13] = company.contacts.fixedPhone
+            html[15] = company._id
+            container.append html.join ''
       , 'json'
 
     $ '#search-options' .on 'click', '.label', (event)!->
       $ this .toggleClass 'blue'
+      search!
 
   if location.pathname == '/search'
     $ '#search-employee-options' .find ':radio, :checkbox' .prop 'checked', false

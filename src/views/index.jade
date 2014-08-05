@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  form#search-company(action='/search/company')
+  form#search-company(action='/search/company', method='get')
     .ui.action.input.huge
-      input(type='text', placeholder='搜索中介公司')
+      input(type='text', name='name', placeholder='搜索中介公司')
       .ui.button.submit
         i.search.icon
 

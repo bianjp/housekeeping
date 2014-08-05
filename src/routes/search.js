@@ -76,7 +76,7 @@ router.get('/employee', function(req, res){
           findcompany(docs);
           res.render("search/employee_result",{
             title : "雇员搜索",
-            employees : docs, 
+            employees : docs,
           });
          }else{
            console.log("未找到相关雇员");
@@ -91,7 +91,7 @@ router.get('/employee', function(req, res){
  * 参数: 年龄, 资历, 薪酬, 擅长语言, 保障内容 (页面跳转)
  * 返回: 搜索结果
  */
- 
+
 router.post('/employee', function(req, res){
   //query is the full.
   //年龄信息
@@ -142,7 +142,7 @@ router.post('/employee', function(req, res){
            findcompany(docs);
            res.render("search/employee_result",{
             title : "雇员搜索",
-            employees : docs, 
+            employees : docs,
            });
          }else{
            console.log("未找到相关雇员");
@@ -164,11 +164,16 @@ router.get('/company',function(req, res){
       //D
       console.log('数据库接入错误，错误代码D');
     } else {
-      collection.find( {name : req.query.name}).toArray(function(err, docs){
-        if(docs){
+      var query = {};
+      if (req.query.name){
+        query.name = new RegExp(req.query.name);
+      }
+      collection.find(query).toArray(function(err, docs){
+        if(!err){
           res.render("search/company",{
             title : "中介搜索",
             companies : docs,
+            name: req.query.name
           });
         }else{
           console.log("未找到相关中介");
@@ -180,17 +185,34 @@ router.get('/company',function(req, res){
 
 router.post('/company', function(req, res){
   //obj_c is company object
-  var date  = req.body.year.split('-');
-  var date1 = new Date ();
-  var date2 = new Date (date1.getTime() - parseInt(date[0])*365*24*60*60*1000);
-  var date3 = new Date (date1.getTime() - parseInt(date[1])*365*24*60*60*1000);
-  var obj_c = {
-    "serviceRegions.regions"  :   {$in  : req.body.serviceRegions.regions},  //覆盖地区
-    "businessScope"           :   {$in  : req.body.businessScope},   //涵盖服务
-    "guarantees"              :   {$all : req.body.guarantees},      //保障内容
-    "registeredAt"            :   {$gte : date3, $lte : date2}      //经营时间
-    //价格区间
-  };
+  var obj_c = {};
+
+  if (req.body.name){
+    obj_c["name"] = new RegExp(req.body.name);
+  }
+  if (req.body.year){
+    var date  = req.body.year.split('-');
+    var date1 = new Date ();
+    var date2 = new Date (date1.getTime() - parseInt(date[0])*365*24*60*60*1000);
+    var date3 = new Date (date1.getTime() - parseInt(date[1])*365*24*60*60*1000);
+    obj_c["registeredAt"] = {$gte : date3, $lte : date2}; //经营时间
+  }
+  if (req.body.serviceRegions){
+    var serviceRegions = req.body.serviceRegions;
+    serviceRegions = serviceRegions instanceof Array ? serviceRegions : [serviceRegions];
+    obj_c["serviceRegions.regions"] = {$in: serviceRegions};
+  }
+  if (req.body.businessScope){
+    var businessScope = req.body.businessScope;
+    businessScope = businessScope instanceof Array ? businessScope : [businessScope];
+    obj_c['businessScope'] = {$in: businessScope};
+  }
+  if (req.body.guarantees){
+    var guarantees = req.body.guarantees;
+    guarantees = guarantees instanceof Array ? guarantees : [guarantees];
+    obj_c['guarantees'] = {$all: guarantees};
+  }
+
   //附加选项
   var options_c = {
   //分页选项
@@ -198,19 +220,20 @@ router.post('/company', function(req, res){
   //"skip" : 10,
     "sort" : [['registeredAt', 'desc'], ['name', 'asc']]
   };
-  
+
   db.collection('companies', function(err, collection) {
     if(err){
       //B
       console.log('数据库接入错误，错误代码B');
     } else {
       collection.find( obj_c, options_c ).toArray(function(err, docs){
-        if(docs){
+        if(!err){
           res.send({
             flag : true,
             companies : docs,
           });
         }else{
+          console.log(err);
           console.log("未找到相关中介");
         }
       });
