@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+  include menu
+
+  form.ui.form.segment(action='/company/employee/batch', method='post', enctype='multipart/form-data')
+    .inline.field
+      label 请选择文件：
+      .ui.input
+        input#file(type='file', name='file', required)
+
+    button.ui.blue.submit.button 提交
+
+    .ui.error.message
+
+    .ui.blue.message
+      .header 说明
+      ul.list
+        li 请上传csv格式的文件
+        li 文件大小不能超过2M
+
+
+  .ui.large.modal#parse-result
+    i.close.icon
+    .header 将添加以下数据，是否继续？
+    .content
+      table.ui.table
+        thead
+          tr
+            th 姓名
+            th 性别
+            th 生日
+            th 籍贯
+            th 婚姻
+            th 学历
+            th 身高
+            th 体重
+            th 拥有证书
+            th 交流语言
+            th 工作经验
+            th 做饭口味
+            th 服务特长
+            th 简介
+        tbody
+          tr
+            td
+        tfoot
+          tr
+            td(colspan='0')
+              | 共有
+              span#row-count
+              | 个雇员
+    .actions
+      .ui.positive.button 继续
+      .ui.negative.button 取消

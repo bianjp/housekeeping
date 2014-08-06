@@ -5,6 +5,7 @@ public/javascripts/
 public/stylesheets/
 public/images/logos/
 public/images/photos/
+public/temp/
 app.js
 
 # Temporary files

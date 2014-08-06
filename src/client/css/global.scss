@@ -3,6 +3,7 @@ $page-width: 1000px;
 body {
   margin: 0;
   padding: 0;
+  height: auto;
 }
 
 #header-content {
@@ -40,7 +41,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .clear {

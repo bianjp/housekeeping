@@ -6,6 +6,7 @@ bodyParser = require 'body-parser'
 session = require 'express-session'
 MongoStore = require 'express-session-mongo'
 config = require './bin/config/config'
+multer = require 'multer'
 
 app = express!
 
@@ -26,6 +27,9 @@ app.use session do
     db: config.database.name
     ip: config.database.host
     port: config.database.port
+
+# handle file upload
+app.use multer dest: './public/temp/'
 
 app.use express.static path.join __dirname, 'public'
 

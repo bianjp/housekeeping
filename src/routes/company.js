@@ -229,10 +229,71 @@ router.post('/employees/delete', function(req, res){
 
 //批量功能
 
-router.post('/company/employee/batch', function(req, res){
+router.get('/employee/batch', function(req, res){
+  res.render('company/batch', {
+    title: '批量添加'
+  });
 });
 
-router.post('/company/employee', function(req, res){
+router.post('/employee/batch', function(req, res){
+  var csvOperator = require('../lib/csvOperator');
+  csvOperator.readFromFile(req.files.file.path, function(err, docs){
+    res.send({
+      flag: !err,
+      employees: docs || []
+    });
+  });
+});
+
+router.post('/employee/batch/add', function(req, res){
+  var employees = JSON.parse(req.body.employees);
+  async.waterfall([
+    function(callback){
+      db.collection('companies', callback);
+    },
+
+    function(col, callback){
+      col.findOne({_id: req.session.user.companyId}, callback);
+    },
+
+    function(item, callback){
+      var items = employees;
+      for (var i = 0; i < items.length; i++){
+        items[i].company = item._id;
+        items[i].workDetail = [];
+        items[i].guarantees = item.guarantees;
+      }
+      callback(null);
+    }
+  ],
+
+  function(err){
+    if (err){
+      res.send({
+        flag: false
+      });
+    }
+    else {
+      async.waterfall([
+        function(callback){
+          db.collection('employees', callback);
+        },
+
+        function(col, callback){
+          col.insert(employees, callback);
+        }
+      ],
+
+      function(err, items){
+        res.send({
+          flag: !err
+        });
+      });
+    }
+  });
+});
+
+router.post('/employee', function(req, res){
 });
 
 router.get('/employee/delete/:id', function(req, res){
