@@ -16,15 +16,17 @@ router.get('/', function(req, res){
   Company.get(null , function(err , docs)
   {
     if (err) {rF.respondGet(res , 'adminMainPage' , {} , err + '->读取公司数据失败') ; return ;}
+    /*
     var companies = [];
     for(var i = 0 ; i < docs.length ; i ++) companies[i] = docs[i] ;
-    for (var i = docs.length; i < 100; i++) {
+    for (var i = docs.length; i < 100 ; i++) {
       companies[i] = {
         _id: i,
         name: 'Company ' + i
       }
     }
-    rF.respondGet(res , 'admin/index' , {title : 'admin homepage' , companies : companies}) ;
+    */
+    rF.respondGet(res , 'admin/index' , {title : 'admin homepage' , companies : docs}) ;
     /*
     res.render('admin/index', {
       title:'admin homepage',

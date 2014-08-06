@@ -129,9 +129,17 @@ function judgeGender(data)
   if (data == '女') return('female') ;
   if (data == 'man') return('male') ;
   if (data == 'woman') return('female') ;
+  if (data == 'Man') return('male') ;
+  if (data == 'Woman') return('female') ;
+  if (data == 'MAN') return('male') ;
+  if (data == 'WOMAN') return('female') ;
   if (data == 'male') return('male') ;
   if (data == 'female') return('female') ;
-  return(null) ;
+  if (data == 'Male') return('male') ;
+  if (data == 'Female') return('female') ;
+  if (data == 'MALE') return('male') ;
+  if (data == 'FEMALE') return('female') ;
+  return('') ;
 }
 
 function judgeExist(data)
