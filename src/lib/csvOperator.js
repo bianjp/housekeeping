@@ -88,6 +88,7 @@ function toArray(table)
       up = (up > num ? up : num) ;
     }
     if (low > up) low = 0 ;
+    employee.workDetail[0].salary = (low + up) / 2 ;
     employee.workDetail[0].lowsalary = low ;
     employee.workDetail[0].upsalary = up ;
     for(var j = 1 ; j < employee.workDetail.length ; j ++)
