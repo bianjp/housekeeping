@@ -142,7 +142,7 @@ router.get('/employee/add', function(req, res){
   });
 });
 
-router.post('/employees/add', function(req, res){
+router.post('/employee/add', function(req, res){
   /*
   var newEmployee = new User({
     company          :   req.body.company,         //公司的id

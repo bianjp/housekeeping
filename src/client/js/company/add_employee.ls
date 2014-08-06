@@ -6,7 +6,7 @@ $ !->
 
   $ 'form#company-add-employee' .on 'submit', (event)!->
     event.preventDefault!
-    $.post '/company/employee/update', $(this).serialize(), (data) !->
+    $.post '/company/employee/add', $(this).serialize(), (data) !->
       if data.flag
         location.href = '/company/employees'
       else
