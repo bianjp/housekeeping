@@ -142,7 +142,7 @@ router.get('/employee/add', function(req, res){
   });
 });
 
-router.post('/employees/add', function(req, res){
+router.post('/employee/add', function(req, res){
   /*
   var newEmployee = new User({
     company          :   req.body.company,         //公司的id
@@ -308,10 +308,33 @@ router.get('/employee/update', function(req, res){
     title: 'company update employee',
     employee : {
       name: '我是雇员名字',
-      birthday: '21000101',
-      workDetail: {
-        workType: 'workType'
-      }
+      gender: 'female',
+      birthday: new Date(),
+      nativePlace: "广东",
+      isMarried: true,
+      education: '初中',
+      height: '160cm',
+      weight: '50kg',
+      certificates: ['ce1', 'ce2'],
+      languages: ['普通话', '粤语'],
+      workExperience: '6years',
+      cookingStyle: ['co1', 'co2'],
+      specialities: ['co1', 'co2'],
+      description: 'euaeuaeuaeu',
+      workDetail: [{
+        workType: '钟点工',
+        workArea: ['番禺区', '天河区'],
+        workContent: ['烧饭', '保洁'],
+        lowsalary: 23,
+        upsalary: 40,
+        workTime: 'workTime',
+        vacation: 'vacation'
+      },
+      {
+        workType: '住家保姆',
+        workArea: ['番禺区', '天河区'],
+        workContent: ['照看小孩']
+      }]
     }
   })
 })
