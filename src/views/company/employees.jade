@@ -24,7 +24,7 @@ block content
               #info
                 = '姓名: ' + e['name']
                 br
-                = '年龄: ' + (thisYear - e['birthday'].getFullYear())
+                = '年龄: ' + (e['birthday'] ? (thisYear - e['birthday'].getFullYear()) : '')
                 br
                 = '资历: ' + e['workExperience']
                 br

@@ -18,11 +18,11 @@ block content
   form.ui.form#company-add-employee
     .grouped.inline.fields
       .field
-        p 姓名: 
+        p 姓名:
         .ui.input
           input.employee-info(type='text' name='name' value='')
       .field
-        p 性别: 
+        p 性别:
         .ui.selection.dropdown
           input.employee-info(type='hidden' name='gender')
           .text 女
@@ -31,7 +31,7 @@ block content
             .item(data-value='male') 男
             .item.active(data-value='female') 女
       .field
-        p 婚姻状况: 
+        p 婚姻状况:
         .ui.selection.dropdown
           input.employee-info(type='hidden' name='isMarried')
           .text 未婚
@@ -74,14 +74,14 @@ block content
             i.dropdown.icon
             = type
           .active.content
-              p 工作区域: 
+              p 工作区域:
               .ui.relaxed.horizontal.list
                 - each area in areas
                  .item
                    .ui.checkbox
                      input(name='workDetail['+indexOfType+'][workArea]', value=area, type='checkbox')
                      label= area
-              p 工作内容: 
+              p 工作内容:
               .ui.relaxed.horizontal.list
                 - each content in workContents[indexOfType]
                   .item
@@ -90,19 +90,19 @@ block content
                       label= content
               .grouped.inline.fields
                 .field
-                  p 最低工资: 
+                  p 最低工资:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][lowsalary]', value='', type='text')
                 .field
-                  p 最高工资: 
+                  p 最高工资:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][upsalary]', value='', type='text')
                 .field
-                  p 工作时间: 
+                  p 工作时间:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][workTime]', value='', type='text')
                 .field
-                  p 休假要求: 
+                  p 休假要求:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][vacation]', value='', type='text')
 
