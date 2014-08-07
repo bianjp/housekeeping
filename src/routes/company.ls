@@ -1,7 +1,6 @@
 router    = require 'express' .Router!
 Employee  = require '../lib/employee'
 Company   = require '../lib/company'
-db        = require '../lib/db' .getConnection!
 async     = require 'async'
 ObjectID  = require 'mongodb' .ObjectID
 
@@ -59,8 +58,8 @@ router.get '/employee/update/:_id', (req, res)!->
   _id = ObjectID req.params._id
   Employee.findOne _id: _id, (err, item)!->
     res.render 'company/update_employee',
+      title: '更新雇员'
       employee: item
-
 
 router.post '/employee/update/:_id', (req, res)!->
   _id = ObjectID req.params._id

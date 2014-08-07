@@ -87,7 +87,25 @@ module.exports =
       cookingStyle   :  if data.cookingStyle then data.cookingStyle.split /[ ,，、]+/ else []
       specialities   :  if data.specialities then data.specialities.split /[ ,，、]+/ else []
       description    :  data.description
-      workDetail     :  data.workDetail
+      workDetail     :  []
+
+    var parsedDetail
+    for detail in data.workDetail
+      if detail.workType
+        parsedDetail = {}
+        parsedDetail.workType = detail.workType
+        parsedDetail.workArea = detail.workArea || []
+        if !(parsedDetail.workArea instanceof Array)
+          parsedDetail.workArea = [parsedDetail.workArea]
+        parsedDetail.workContent = detail.workContent || []
+        if !(parsedDetail.workContent instanceof Array)
+          parsedDetail.workContent = [parsedDetail.workContent]
+        parsedDetail.lowsalary = parseInt detail.lowsalary
+        parsedDetail.upsalary = parseInt detail.upsalary
+        parsedDetail.workTime = detail.workTime
+        parsedDetail.vacation = detail.vacation
+
+        employee.workDetail.push parsedDetail
 
     if !req.files.photo
       callback null, employee

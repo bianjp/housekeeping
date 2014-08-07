@@ -16,66 +16,60 @@ block content
   - var places = ['北京', '浙江', '天津', '安徽', '上海', '福建', '重庆', '江西', '山东', '河南', '湖北', '湖南', '广东', '海南', '山西', '青海', '江苏', '辽宁', '吉林', '台湾', '河北', '贵州', '四川', '云南', '陕西', '甘肃', '黑龙', '香港', '澳门', '广西', '宁夏', '西藏', '新疆', '内蒙古'];
   - var genderChinese = {male: '男', female: '女'};
 
+  include menu
+
   form.ui.form#company-update-employee
+    legend.ui.header 更新雇员
+
     .grouped.inline.fields
+      #photo-area
+        img.ui.img(src=employee.photo)
+        .ui.fluid.blue.button 更换头像
+        input(type='file', name='photo')
+
       .field
-        p 姓名: 
+        p 姓名:
         .ui.input
           input.employee-info(type='text' name='name' value=employee.name)
       .field
-        p 性别: 
+        p 性别:
         .ui.selection.dropdown
-          input.employee-info(type='hidden' name='gender')
+          input.employee-info(type='hidden' name='gender', value=employee.gender)
           .text= genderChinese[employee.gender]
           i.dropdown.icon
           .menu
-            if employee.gender === 'female'
-              .item(data-value='male') 男
-              .item.active(data-value='female') 女
-            else
-              .item.active(data-value='male') 男
-              .item(data-value='female') 女
+            .item(data-value='male') 男
+            .item(data-value='female') 女
       .field
-        p 婚姻状况: 
+        p 婚姻状况:
         .ui.selection.dropdown
-          input.employee-info(type='hidden' name='isMarried')
-          if employee.isMarried
-            .text 已婚
-            i.dropdown.icon
-            .menu
-              .item(data-value='0') 未婚
-              .item.active(data-value='1') 已婚
-          else
-            .text 未婚
-            i.dropdown.icon
-            .menu
-              .item.active(data-value='0') 未婚
-              .item(data-value='1') 已婚
+          input.employee-info(type='hidden' name='isMarried', value=employee.isMarried ? '1' : '0')
+          .text
+          i.dropdown.icon
+          .menu
+            .item(data-value='0') 未婚
+            .item(data-value='1') 已婚
       .field
         p 学历:
         .ui.selection.dropdown
-          input.employee-info(type='hidden' name='education')
+          input.employee-info(type='hidden' name='education', value=employee.education)
           .text= employee.education
           i.dropdown.icon
           .menu
-            .item.active(data-value=employee.education)= employee.education
-            - for (var i = 0; i < educations.length; i++)
-              if educations[i] !== employee.education
-                .item(data-value=educations[i])= educations[i]
+            each education in educations
+              .item(data-value=education)= education
       .field
         p 籍贯:
         .ui.selection.dropdown
-          input.employee-info(type='hidden' name='nativePlace')
+          input.employee-info(type='hidden' name='nativePlace', value=employee.nativePlace)
           .text= employee.nativePlace
           i.dropdown.icon
           .menu
-            .item.active(data-value=employee.nativePlace)= employee.nativePlace
-            - for (var i = 1; i < places.length; i++)
-              if places[i] !== employee.nativePlace
-                .item(data-value=places[i])= places[i]
+            each place in places
+              .item(data-value=place)= place
 
       .field
-        p 生日: 
+        p 生日:
         .ui.input
           input.employee-info(type='text' name='birthday' value=formatDate(employee.birthday))
 
@@ -90,6 +84,8 @@ block content
       - var activeTable = [0, 0, 0, 0, 0, 0]
       - var active = ['', 'active']
       - var workItems = [emptyWorkItem, emptyWorkItem, emptyWorkItem, emptyWorkItem, emptyWorkItem, emptyWorkItem]
+
+      - employee.workDetail = employee.workDetail || []
       - each val in employee.workDetail
         - var i = workTypes.indexOf(val.workType)
         - activeTable[i] = 1
@@ -99,42 +95,39 @@ block content
           div(class=active[activeTable[indexOfType]]+' title')
             i.dropdown.icon
             = type
+            input.selected(type='checkbox', name='workDetail[' + indexOfType + '][workType]', value=type, checked)
           div(class=active[activeTable[indexOfType]]+' content')
-              p 工作区域: 
+              p 工作区域:
               .ui.relaxed.horizontal.list
+                - var workArea = workItems[indexOfType]['workArea'] || []
                 - each area in areas
                  .item
                    .ui.checkbox
-                     if (workItems[indexOfType]['workArea'].indexOf(area) === -1)
-                       input(name='workDetail['+indexOfType+'][workArea]', value=area, type='checkbox')
-                     else
-                       input(name='workDetail['+indexOfType+'][workArea]', value=area, type='checkbox', checked='checked')
-                     label= area
-              p 工作内容: 
+                      input(name='workDetail['+indexOfType+'][workArea]', value=area, type='checkbox', checked=workArea.indexOf(area) != -1)
+                      label= area
+              p 工作内容:
               .ui.relaxed.horizontal.list
+                - var workContent = workItems[indexOfType]['workContent'] || []
                 - each content in workContents[indexOfType]
                   .item
                     .ui.checkbox
-                      if (workItems[indexOfType]['workContent'].indexOf(content) === -1)
-                        input(name='workDetail['+indexOfType+'][workContent]', value=content, type='checkbox')
-                      else
-                        input(name='workDetail['+indexOfType+'][workContent]', value=content, type='checkbox', checked='checked')
+                      input(name='workDetail['+indexOfType+'][workContent]', value=content, type='checkbox', checked=workContent.indexOf(content) != -1)
                       label= content
               .grouped.inline.fields
                 .field
-                  p 最低工资: 
+                  p 最低工资:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][lowsalary]', value=workItems[indexOfType]['lowsalary'], type='text')
                 .field
-                  p 最高工资: 
+                  p 最高工资:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][upsalary]', value=workItems[indexOfType]['upsalary'], type='text')
                 .field
-                  p 工作时间: 
+                  p 工作时间:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][workTime]', value=workItems[indexOfType]['workTime'], type='text')
                 .field
-                  p 休假要求: 
+                  p 休假要求:
                   .ui.input
                     input(name='workDetail['+indexOfType+'][vacation]', value=workItems[indexOfType]['vacation'], type='text')
 

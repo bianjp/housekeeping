@@ -12,3 +12,39 @@
   height: 200px;
   width: 300px;
 }
+
+#company-update-employee,
+#company-add-employee {
+
+  #photo-area {
+    position: relative;
+    float: right;
+    width: 200px;
+    height: 300px;
+    margin: 0px 200px 0px 0px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .button {
+      display: none;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+
+    &:hover .button {
+      display: block;
+    }
+
+    input {
+      display: none;
+    }
+  }
+
+  input.selected {
+    float: right;
+  }
+}
