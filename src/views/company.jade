@@ -60,18 +60,19 @@ block content
     h3.ui.header 该公司有#{company['employeeCount']}个雇员
     .ui.very.relaxed.horizontal.list
       - each e in employees
-        .item
-          #employee-card
-            .ui.left.floated.image#employee-photo
-              img(src= e['photo'])
-            #info
-              = '姓名: ' + e['name']
-              br
-              = '年龄: ' + ( (new Date().getFullYear() ) - e['birthday'].getFullYear())
-              br
-              = '资历: ' + e['workExperience']
-              br
-              = '服务项目: '
-              - each val in e['workDetail']
-                = val['workType'] + ' '
-          a.ui.teal.button.cardbars.check-employee(href='/employee/' + e['_id']) 查看资料
+        .item.ui.segment
+          img.ui.left.floated.image(src =e['photo'])#employee-photo
+          .content#info
+            .ui.header= e.name
+            div
+              span 年龄:
+              = (new Date().getFullYear() - e.birthday.getFullYear())
+            div
+              span 工作经验:
+              = e.workExperience
+            div
+              span 服务项目:
+              div
+                each val in e.workDetail
+                  = val.workType + ' '
+          a.ui.fluid.blue.button#check-employee(href='employee/' + e._id) 查看资料

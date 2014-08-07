@@ -7,30 +7,26 @@ block content
 
   #employees-cards-list
     h3.ui.header 共有#{employees.length}个雇员
+    h4#batch-entry
+      a(href='batch') 批量导入入口--------->
     .ui.very.relaxed.horizontal.list
-      .item
-        .ui.segment
-          a.ui.teal.cardbars.add-employee.button(href="/company/employee/add") 添加雇员
-      .item
-        .ui.segment
-          a.ui.teal.cardbars.add-employee.button(href="/company/employee/batch") 批量导入
-      - var thisYear = new Date().getFullYear()
-      each e in employees
-        .item
-          .ui.segment
-            #employee-card
-              .ui.left.floated.image#employee-photo
-                img(src= e['photo'])
-              #info
-                = '姓名: ' + e['name']
-                br
-                = '年龄: ' + (e['birthday'] ? (thisYear - e['birthday'].getFullYear()) : '')
-                br
-                = '资历: ' + e['workExperience']
-                br
-                = '服务项目: '
-                - each val in e['workDetail']
-                  = val['workType'] + ' '
-            a.ui.blue.button.cardbars.update-employee(href='/company/employee/update?id=' + e['_id']) 编辑资料
-            br
-            .ui.red.button.cardbars.delete-employee(href='/company/employee/delete/:id=' + e['_id']) 删除该雇员
+      #add-employee
+        a.ui.black.massive.button(href='employee/add') +
+      - each e in employees
+        .item.ui.segment
+          img.ui.left.floated.image(src =e['photo'])#employee-photo
+          .content#info
+            .ui.header= e.name
+            div
+              span 年龄:
+              = (new Date().getFullYear() - e.birthday.getFullYear())
+            div
+              span 工作经验:
+              = e.workExperience
+            div
+              span 服务项目:
+              div
+                each val in e.workDetail
+                  = val.workType + ' '
+          a.ui.fluid.blue.button.update-employee(href='employee/update/' + e._id) 编辑资料
+          .ui.fluid.red.button.delete-employee(href='employee/delete/' + e._id) 删除雇员
