@@ -173,6 +173,7 @@ function parseSet(data)
   var set = [] ;
   var len = 0 ;
   var tmp = '' ;
+  if (! data) return(set) ;
 
   for(var i = 0 ; i < data.length ; i ++)
     if (data[i] == ';' || data[i] == '，' || data[i] == '；' || data[i] == '、' || data[i] == '~' || data[i] == '-')
