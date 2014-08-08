@@ -88,6 +88,7 @@ function toArray(table)
       up = (up > num ? up : num) ;
     }
     if (low > up) low = 0 ;
+    employee.workDetail[0].salary = (low + up) / 2 ;
     employee.workDetail[0].lowsalary = low ;
     employee.workDetail[0].upsalary = up ;
     for(var j = 1 ; j < employee.workDetail.length ; j ++)
@@ -129,9 +130,17 @@ function judgeGender(data)
   if (data == '女') return('female') ;
   if (data == 'man') return('male') ;
   if (data == 'woman') return('female') ;
+  if (data == 'Man') return('male') ;
+  if (data == 'Woman') return('female') ;
+  if (data == 'MAN') return('male') ;
+  if (data == 'WOMAN') return('female') ;
   if (data == 'male') return('male') ;
   if (data == 'female') return('female') ;
-  return(null) ;
+  if (data == 'Male') return('male') ;
+  if (data == 'Female') return('female') ;
+  if (data == 'MALE') return('male') ;
+  if (data == 'FEMALE') return('female') ;
+  return('') ;
 }
 
 function judgeExist(data)
@@ -164,6 +173,7 @@ function parseSet(data)
   var set = [] ;
   var len = 0 ;
   var tmp = '' ;
+  if (! data) return(set) ;
 
   for(var i = 0 ; i < data.length ; i ++)
     if (data[i] == ';' || data[i] == '，' || data[i] == '；' || data[i] == '、' || data[i] == '~' || data[i] == '-')
