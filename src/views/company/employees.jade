@@ -19,7 +19,7 @@ block content
             .ui.header= e.name
             div
               span 年龄:
-              = (new Date().getFullYear() - e.birthday.getFullYear())
+              = e.birthday ? (new Date().getFullYear() - e.birthday.getFullYear()) : ''
             div
               span 工作经验:
               = e.workExperience
