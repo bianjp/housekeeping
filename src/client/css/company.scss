@@ -1,5 +1,5 @@
 #company-header{
-  background-color: blue;
+  background-color: #22AAFF;
   color: white;
   margin-bottom: 50px;
   min-height: 150px;
@@ -16,34 +16,82 @@
 }
 
 #company-info h3{
-  background-color: dimgray;
+  background-color: rgba(0,0,0,0.1);
 }
 
 #employees-cards-list h3 {
-  background-color: dimgray;
+  background-color: rgba(0,0,0,0.1);
   text-align: center;
 }
 
-#employees-cards-list .segment {
-  width: 300;
-  height: 200;
+#employees-cards-list .item {
+  width: 300px;
+  height: 150px;
   padding: 0 0 0 0;
+  margin-left: 100px;
+
+  & > img {
+    width: 100px;
+    height: 125px;
+  }
+
+  .content > div {
+    clear: both;
+
+    & > span {
+      float: left;
+      width: 80px;
+    }
+
+    & > div {
+      float: left;
+    }
+  }
+
+  & > .update-employee {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 150px;
+    display: none;
+  }
+
+  & > .delete-employee {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 150px;
+    display: none;
+  }
+
+  & > .check-employee {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 300px;
+    display: none;
+  }
+
+  &:hover > .button {
+    display: block;
+  }
 }
 
-.cardbars {
+#add-employee {
+  border-style: dashed;
+  border-color: rgba(0,0,0,0.1);
   width: 300px;
-  text-align: center;
+  height: 150px;
+  padding: 0 0 0 0;
+  margin-left: 100px;
+  margin-top: 16px;
+  float: left;
+  & > .button {
+    margin-left: 107px;
+    margin-top: 44px;
+  }
 }
 
-#employee-card {
-  width: 300px;
-}
-
-#employee-card #employee-photo {
-  width: 100px;
-  height: 100px;
-}
-
-#employee-card #info {
-  min-height: 100px;
+#batch-entry {
+  text-align: right;
 }
