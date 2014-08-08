@@ -2,6 +2,7 @@ extends ../layout
 
 block content
   include mixins
+  include search_bar
 
   - type = parseInt(type)
 
@@ -71,7 +72,7 @@ block content
         .item
           img.ui.left.floated.image(src=employee.photo)
           .content
-            .ui.header= employee.name
+            a.ui.header(href='/employee/' + employee._id)= employee.name
             div
               span 年龄：
               div= thisYear - employee.birthday.getFullYear()
@@ -80,14 +81,14 @@ block content
               div= employee.workExperience
             div
               span 薪资：
-              div= employee.workDetail.salary
+              div= employee.workDetail[0].lowsalary + '-' + employee.workDetail[0].upsalary
             div
               span 学历：
               div= employee.education
 
           .right.floated.aligned.company
             a.ui.header(href='/company/' + employee.company)= employee.company_property.name
-            a(href='/company/' + employee.company)
-              img.ui.image(src=employee.company_property.logo)
+            a.ui.image(href='/company/' + employee.company)
+              img(src=employee.company_property.logo)
 
-          a.ui.fluid.blue.button(href='/employee/' + employee._id) 查看
+          //- a.ui.fluid.blue.button(href='/employee/' + employee._id) 查看

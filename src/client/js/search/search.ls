@@ -113,41 +113,42 @@ $ !->
         html = [
             '<div class="item"><img class="ui left floated image" src="'
             null  # 1 photo
-            '"><div class="content"><div class="ui header">',
-            null  # 3 name
-            '</div><div><span>年龄：</span><div>'
-            null  # 5 age
+            '"><div class="content"><a class="ui header" href="/employee/'
+            null  # id
+            '">',
+            null  # name
+            '</a><div><span>年龄：</span><div>'
+            null  # age
             '</div></div><div><span>工作经验：</span><div>'
-            null  # 7 work experience
-            '</div></div><div><span>薪资：</span><div>'
-            null  # 9 salary
+            null  # work experience
+            '年</div></div><div><span>薪资：</span><div>'
+            null  # salary
             '</div></div><div><span>学历：</span><div>'
-            null  # 11 education
+            null  # education
             '</div></div></div><div class="right floated aligned company"><a class="ui header" href="/company/'
-            null  # 13 company _id
+            null  # company _id
             '">'
-            null  # 15 company name
+            null  # company name
             '</a><a href="/company/'
-            null  # 17 company _id
-            '<img class="ui image" src="'
-            null  # 19 company logo
-            '"></a></div><a class="ui fluid blue button" href="/employee/'
-            null  # 21 _id
-            '">查看</a></div>'
+            null  # company _id
+            '"><img class="ui image" src="'
+            null  # company logo
+            '"></a></div></div>'
         ]
 
         container = $ '#search-result .list'
+        thisYear = new Date! .getFullYear!
         for employee in data.employees
           html[1] = employee.photo
-          html[3] = employee.name
-          html[5] = employee.age
-          html[7] = employee.workExperience
-          html[9] = employee.workDetail.salary
-          html[11] = employee.education
-          html[13] = employee.company
-          html[15] = employee.company_property.name
-          html[17] = employee.company
-          html[19] = employee.company_property.logo
-          html[21] = employee._id
+          html[3] = employee._id
+          html[5] = employee.name
+          html[7] = thisYear - (new Date employee.birthday .getFullYear!)
+          html[9] = employee.workExperience
+          html[11] = employee.workDetail[0].lowsalary + '-' + employee.workDetail[0].upsalary
+          html[13] = employee.education
+          html[15] = employee.company
+          html[17] = employee.company_property.name
+          html[19] = employee.company
+          html[21] = employee.company_property.logo
           container.append html.join ''
       , 'json'

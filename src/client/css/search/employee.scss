@@ -16,6 +16,10 @@
     height: 125px;
   }
 
+  a.header {
+    text-decoration: none;
+  }
+
   .content > div {
     clear: both;
 
@@ -29,18 +33,21 @@
     }
   }
 
-  & > .button {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    display: none;
-  }
+  // & > .button {
+  //   position: absolute;
+  //   left: 0px;
+  //   bottom: 0px;
+  //   display: none;
+  // }
 
-  &:hover > .button {
-    display: block;
-  }
+  // &:hover > .button {
+  //   display: block;
+  // }
 
   .company {
+    position: absolute;
+    top: 0px;
+    right: 0px;
     width: auto;
 
     .header {
